@@ -12,7 +12,7 @@ class Date {
 
 
 private:
-	void set_offset(int currTime);
+	void set_offset(long int currTime);
 	static int leap_years_between(int startYear, int endYear);
 	static int leap_years_before(int year);
 	static int days_between(int startYear = 1858, int= 1970);

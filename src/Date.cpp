@@ -10,23 +10,20 @@
 #include <iostream>
 #include <time.h>
 
-
-
-
-
 Date::Date() {
-	int currTime = (int)k_time(&currTime);
-	set_offset(currTime);
+	time_t mytime;
+	k_time(&mytime);
+	std::cout << "mytime is " << mytime << std::endl;
+	set_offset(mytime);
 }
-
-void Date::set_offset(int currTime) {
-	offset = (currTime / 60 / 60 / 24) + days_between();
-	std::cout << offset << std::endl;
-}
-
 
 Date::~Date() {
 	// TODO Auto-generated destructor stub
+}
+
+void Date::set_offset(long int currTime) {
+	offset = (currTime / 60 / 60 / 24) + days_between(1858, 1970);
+	std::cout << "in set_offset " << offset << std::endl;
 }
 
 // Returns number of leap years, exclusive endYear
