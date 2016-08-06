@@ -14,6 +14,7 @@ Date::Date() {
 	time_t mytime;
 	k_time(&mytime);
 	std::cout << "date mytime is " << mytime << std::endl;
+	monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
 	//set_offset(mytime);
 }
 
@@ -21,10 +22,11 @@ Date::~Date() {
 	// TODO Auto-generated destructor stub
 }
 
+
+
 void Date::set_offset(long int currTime) {
-	int startYear = 1859;
-	int unixStart = 1970;
-	offset = (currTime / 60 / 60 / 24) + days_between(startYear, unixStart);
+
+	offset = (currTime / 60 / 60 / 24) + days_between(kStartYear, kUnixStart);
 	std::cout << "in set_offset " << offset << std::endl;
 }
 
@@ -38,3 +40,18 @@ int Date::days_between(int startYear, int endYear) {
 	return diff * 365 + leap_years_between(startYear, endYear);
 }
 
+int Date::year() {
+	int tentative_years = offset / 365;
+	int remainingDays = offset % 365;
+	if(leap_years_before(kStartYear + tentative_years) >= remainingDays) {
+		tentative_years--;
+	}
+	return kStartYear + tentative_years;
+}
+
+int Date::month() {
+	int daysInCurrYear = offset - days_between(kStartYear, year());
+
+
+
+}

@@ -27,7 +27,8 @@ int Gregorian::leap_years_before(int year) {
 	 return (year / 4) - (year / 100) + (year / 400);
 }
 
-//int Gregorian::year() {
-//	return 0;
-//}
+bool Gregorian::is_leap_year(int year) {
+	 return (year % 4 == 0)  && ((year % 100 == 0) || (year % 400 == 0) );
+}
+
 
