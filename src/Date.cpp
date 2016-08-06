@@ -22,7 +22,9 @@ Date::~Date() {
 }
 
 void Date::set_offset(long int currTime) {
-	offset = (currTime / 60 / 60 / 24) + days_between(1858, 1970);
+	int startYear = 1858;
+	int unixStart = 1970;
+	offset = (currTime / 60 / 60 / 24) + days_between(startYear, unixStart);
 	std::cout << "in set_offset " << offset << std::endl;
 }
 

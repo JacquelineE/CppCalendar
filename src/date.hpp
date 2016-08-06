@@ -9,21 +9,23 @@
 #define LAB2_SRC_DATE_HPP_
 
 class Date {
+	friend class Gregorian;
 
-
+//friends
 private:
-	void set_offset(long int currTime);
-	static int leap_years_between(int startYear, int endYear);
 	static int leap_years_before(int year);
-	static int days_between(int startYear = 1858, int= 1970);
 
+//friends and inherits
 protected:
 	int offset;
+	void set_offset(long int currTime);
+	static int leap_years_between(int startYear, int endYear);
+	static int days_between(int startYear = 1858, int= 1970);
 
 public:
 	Date();
 	~Date();
-//
+
 //	virtual int year() = 0;
 //	virtual unsigned int month() = 0;
 //	virtual unsigned int day() = 0;

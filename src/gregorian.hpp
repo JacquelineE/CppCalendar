@@ -9,7 +9,7 @@
 #define LAB2_SRC_GREGORIAN_HPP_
 
 
-class Gregorian {
+class Gregorian : public Date {
 public:
 	Gregorian();
 	~Gregorian();

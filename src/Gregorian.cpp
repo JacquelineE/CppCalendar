@@ -5,11 +5,17 @@
  *      Author: je
  */
 
+#include "date.hpp"
 #include "gregorian.hpp"
+#include "kattistime.hpp"
+#include <iostream>
+#include <time.h>
 
 Gregorian::Gregorian() {
-	// TODO Auto-generated constructor stub
-
+	time_t mytime;
+	k_time(&mytime);
+	std::cout << "gregorian mytime is " << mytime << std::endl;
+	set_offset(mytime);
 }
 
 Gregorian::~Gregorian() {

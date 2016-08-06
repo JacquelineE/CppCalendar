@@ -9,6 +9,8 @@
 #include <iostream>
 #include <time.h>
 #include "date.hpp"
+#include "gregorian.hpp"
+#include "julian.hpp"
 #include "kattistime.hpp"
 using namespace std;
 
@@ -20,5 +22,9 @@ int main() {
 	set_k_time(tp);
 
 	Date * d = new Date();
+	std::cout << std::endl << "lets build gregorian!" << std::endl;
+	Gregorian * g = new Gregorian();
+	std::cout << std::endl << "lets build julian!" << std::endl;
+	Julian * j = new Julian();
 	return 0;
 }
