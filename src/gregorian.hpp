@@ -10,6 +10,9 @@
 
 
 class Gregorian : public Date {
+
+private:
+	virtual int leap_years_before(int year);
 public:
 	Gregorian();
 	~Gregorian();

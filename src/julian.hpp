@@ -14,7 +14,7 @@ public:
 	~Julian();
 
 private:
-	static int leap_years_before(int year);
+	virtual int leap_years_before(int year);
 };
 
 #endif /* LAB2_SRC_JULIAN_HPP_ */

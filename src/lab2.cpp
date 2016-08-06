@@ -21,10 +21,9 @@ int main() {
 	std::cout << "time is " << tp << std::endl;
 	set_k_time(tp);
 
-	Date * d = new Date();
 	std::cout << std::endl << "lets build gregorian!" << std::endl;
-	Gregorian * g = new Gregorian();
+	Date * g = new Gregorian();
 	std::cout << std::endl << "lets build julian!" << std::endl;
-	Julian * j = new Julian();
+	Date * j = new Julian();
 	return 0;
 }

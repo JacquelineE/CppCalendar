@@ -22,6 +22,11 @@ Gregorian::~Gregorian() {
 	// TODO Auto-generated destructor stub
 }
 
+int Gregorian::leap_years_before(int year) {
+	 year--;
+	 return (year / 4) - (year / 100) + (year / 400);
+}
+
 //int Gregorian::year() {
 //	return 0;
 //}
