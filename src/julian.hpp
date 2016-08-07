@@ -16,6 +16,7 @@ public:
 private:
 	virtual int leap_years_before(int year);
 	virtual bool is_leap_year(int year);
+	virtual void set_offset(long int currTime);
 };
 
 #endif /* LAB2_SRC_JULIAN_HPP_ */

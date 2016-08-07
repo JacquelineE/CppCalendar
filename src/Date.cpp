@@ -9,6 +9,7 @@
 #include "kattistime.hpp"
 #include <iostream>
 #include <time.h>
+#include <math.h>       /* ceil */
 
 Date::Date() {
 //	time_t mytime;
@@ -26,8 +27,7 @@ Date::~Date() {
 int Date::monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
 
 void Date::set_offset(long int currTime) {
-
-	offset = (currTime / 60 / 60 / 24) + days_between(kStartYear, kUnixStart);
+	offset = (ceil((double)currTime /( 60 * 60 * 24))) + days_between(kStartYear, kUnixStart);
 	std::cout << "in set_offset " << offset << std::endl;
 }
 
@@ -43,9 +43,7 @@ int Date::days_between(int startYear, int endYear) {
 
 unsigned int Date::year() {
 	int tentative_years = offset / 365;
-	std::cout << "tentyears" << tentative_years << std::endl;
 	int remainingDays = offset % 365;
-	std::cout << "remainingdays" << remainingDays << std::endl;
 	if(leap_years_between(kStartYear, kStartYear + tentative_years) >= remainingDays) {
 		tentative_years--;
 	}
@@ -55,6 +53,7 @@ unsigned int Date::year() {
 unsigned int Date::month() {
 	int currYear = year();
 	int daysOffsetCurrYear = offset - days_between(kStartYear, currYear);
+	std::cout << "dayOffset" << daysOffsetCurrYear << std::endl;
 	bool isLeapYear =  is_leap_year(currYear);
 	unsigned int index = 0;
 	while(daysOffsetCurrYear > 0) {
@@ -74,6 +73,9 @@ unsigned int Date::day() {
 	unsigned int daysOffsetCurrYear = offset - days_between(kStartYear, currYear);
 	unsigned int daysToStartOfMonth = 0;
 	for(unsigned int i = 0; i <currMonth-1; i++) {
+		if(i == 1 && is_leap_year(currYear)) {
+			daysToStartOfMonth += 1;
+		}
 		daysToStartOfMonth += monthsLengthNormalYear[i];
 	}
 	return daysOffsetCurrYear - daysToStartOfMonth;

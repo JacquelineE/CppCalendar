@@ -32,3 +32,9 @@ int Julian::leap_years_before(int year) {
 bool Julian::is_leap_year(int year) {
 	 return (year % 4 == 0);
 }
+
+void Julian::set_offset(long int currTime) {
+	Date::set_offset(currTime);
+	offset -= kJulOffsetDiff1858;
+	std::cout << "in set_offset jul " << offset << std::endl;
+}

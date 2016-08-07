@@ -20,12 +20,13 @@ protected:
 	static int monthsLengthNormalYear[12];
 	int kStartYear = 1858;
 	int kUnixStart = 1970;
+	int kJulOffsetDiff1858 = 13;
 	int offset;
 
 	virtual int leap_years_before(int year) = 0;
 	virtual bool is_leap_year(int year) = 0;
 
-	void set_offset(long int currTime);
+	virtual void set_offset(long int currTime);
 	int leap_years_between(int startYear, int endYear);
 	int days_between(int startYear = 1858, int = 1970);
 
