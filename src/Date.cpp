@@ -11,11 +11,11 @@
 #include <time.h>
 
 Date::Date() {
-	time_t mytime;
-	k_time(&mytime);
-	std::cout << "date mytime is " << mytime << std::endl;
+//	time_t mytime;
+//	k_time(&mytime);
+//	std::cout << "date mytime is " << mytime << std::endl;
 	//monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
-	set_offset(mytime);
+	//set_offset(mytime);
 }
 
 

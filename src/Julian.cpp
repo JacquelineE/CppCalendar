@@ -12,10 +12,10 @@
 #include <time.h>
 
 Julian::Julian() {
-//	time_t mytime;
-//	k_time(&mytime);
-//	std::cout << "julian mytime is " << mytime << std::endl;
-//	set_offset(mytime);
+	time_t mytime;
+	k_time(&mytime);
+	std::cout << "julian mytime is " << mytime << std::endl;
+	set_offset(mytime);
 }
 
 Julian::~Julian() {

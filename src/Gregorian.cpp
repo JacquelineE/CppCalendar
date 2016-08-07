@@ -12,11 +12,10 @@
 #include <time.h>
 
 Gregorian::Gregorian() {
-////	Date::Date();
-////	time_t mytime;
-////	k_time(&mytime);
-////	std::cout << "gregorian mytime is " << mytime << std::endl;
-////	set_offset(mytime);
+	time_t mytime;
+	k_time(&mytime);
+	std::cout << "gregorian mytime is " << mytime << std::endl;
+	set_offset(mytime);
 }
 
 Gregorian::~Gregorian() {
