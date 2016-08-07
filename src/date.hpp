@@ -34,8 +34,9 @@ protected:
 public:
 	Date();
 	virtual ~Date(); // = 0;
-	int year();
-	int month();
+	unsigned int year();
+	unsigned int month();
+	unsigned int day();
 
 
 //	virtual unsigned int month() = 0;
