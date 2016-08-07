@@ -14,16 +14,14 @@ Date::Date() {
 	time_t mytime;
 	k_time(&mytime);
 	std::cout << "date mytime is " << mytime << std::endl;
-	monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
-	//set_offset(mytime);
+	//monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+	set_offset(mytime);
 }
+
 
 Date::~Date() {
-	// TODO Auto-generated destructor stub
+//	//delete [] monthsLengthNormalYear
 }
-
-
-
 void Date::set_offset(long int currTime) {
 
 	offset = (currTime / 60 / 60 / 24) + days_between(kStartYear, kUnixStart);
@@ -51,7 +49,7 @@ int Date::year() {
 
 int Date::month() {
 	int daysInCurrYear = offset - days_between(kStartYear, year());
-
+	return 0;
 
 
 }

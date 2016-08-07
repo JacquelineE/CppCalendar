@@ -12,10 +12,10 @@
 #include <time.h>
 
 Julian::Julian() {
-	time_t mytime;
-	k_time(&mytime);
-	std::cout << "julian mytime is " << mytime << std::endl;
-	set_offset(mytime);
+//	time_t mytime;
+//	k_time(&mytime);
+//	std::cout << "julian mytime is " << mytime << std::endl;
+//	set_offset(mytime);
 }
 
 Julian::~Julian() {
@@ -29,3 +29,6 @@ int Julian::leap_years_before(int year) {
 	 return (year / 4);
 }
 
+bool Julian::is_leap_year(int year) {
+	 return (year % 4 == 0);
+}

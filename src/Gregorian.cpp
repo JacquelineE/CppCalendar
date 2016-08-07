@@ -12,15 +12,18 @@
 #include <time.h>
 
 Gregorian::Gregorian() {
-	time_t mytime;
-	k_time(&mytime);
-	std::cout << "gregorian mytime is " << mytime << std::endl;
-	set_offset(mytime);
+////	Date::Date();
+////	time_t mytime;
+////	k_time(&mytime);
+////	std::cout << "gregorian mytime is " << mytime << std::endl;
+////	set_offset(mytime);
 }
 
 Gregorian::~Gregorian() {
-	// TODO Auto-generated destructor stub
+
+
 }
+
 
 int Gregorian::leap_years_before(int year) {
 	 year--;
