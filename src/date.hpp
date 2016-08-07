@@ -17,8 +17,8 @@ private:
 
 //friends and inherits
 protected:
-	//int monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
-	int kStartYear = 1859;
+	static int monthsLengthNormalYear[12];
+	int kStartYear = 1858;
 	int kUnixStart = 1970;
 	int offset;
 
@@ -28,13 +28,14 @@ protected:
 	void set_offset(long int currTime);
 	int leap_years_between(int startYear, int endYear);
 	int days_between(int startYear = 1858, int = 1970);
-	int year();
-	int month();
+
 
 
 public:
 	Date();
 	virtual ~Date(); // = 0;
+	int year();
+	int month();
 
 
 //	virtual unsigned int month() = 0;
