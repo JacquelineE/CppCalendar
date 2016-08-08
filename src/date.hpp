@@ -38,7 +38,8 @@ public:
 	unsigned int year() const;
 	unsigned int month() const;
 	unsigned int day() const;
-
+	unsigned int days_per_week() const;
+	unsigned int days_this_month() const;
 
 //	virtual unsigned int month() = 0;
 //	virtual unsigned int day() = 0;

@@ -81,3 +81,16 @@ unsigned int Date::day() const {
 	return daysOffsetCurrYear - daysToStartOfMonth;
 
 }
+
+unsigned int Date::days_per_week() const {
+	return 7;
+}
+
+unsigned int Date::days_this_month() const {
+	int currMonth = month();
+	int daysInCurrMonth = monthsLengthNormalYear[currMonth-1];
+	if(currMonth == 2 && is_leap_year(year())) {
+		daysInCurrMonth += 1;
+	}
+	return daysInCurrMonth;
+}

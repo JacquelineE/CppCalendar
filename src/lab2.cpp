@@ -28,6 +28,7 @@ int main() {
 	std::cout << std::endl << "lets build julian!" << std::endl;
 	Date * j = new Julian();
 	std::cout << j -> year() << j->month() << "day" << j->day() << std::endl;
+	std::cout << "days in month g: " << g-> days_this_month()  << "jul: " << j->days_this_month() << std::endl;
 
 	return 0;
 }
