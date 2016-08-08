@@ -12,20 +12,34 @@ class Date {
 
 //friends
 private:
-	virtual int leap_years_before(int year) = 0;
+
+
 
 //friends and inherits
 protected:
+	static int monthsLengthNormalYear[12];
+	int kStartYear = 1858;
+	int kUnixStart = 1970;
+	int kJulOffsetDiff1858 = 13;
 	int offset;
-	void set_offset(long int currTime);
+
+	virtual int leap_years_before(int year) = 0;
+	virtual bool is_leap_year(int year) = 0;
+
+	virtual void set_offset(long int currTime);
 	int leap_years_between(int startYear, int endYear);
-	int days_between(int startYear = 1858, int= 1970);
+	int days_between(int startYear = 1858, int = 1970);
+
+
 
 public:
 	Date();
-	~Date();
+	virtual ~Date(); // = 0;
+	unsigned int year();
+	unsigned int month();
+	unsigned int day();
 
-//	virtual int year() = 0;
+
 //	virtual unsigned int month() = 0;
 //	virtual unsigned int day() = 0;
 //	virtual unsigned int week_day() = 0;

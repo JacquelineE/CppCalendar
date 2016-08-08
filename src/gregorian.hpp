@@ -11,10 +11,12 @@
 
 class Gregorian : public Date {
 
-private:
+protected:
 	virtual int leap_years_before(int year);
+	virtual bool is_leap_year(int year);
+	//int year();
 public:
-	Gregorian();
+	Gregorian();// = default;
 	~Gregorian();
 	//int year();
 };
