@@ -25,6 +25,7 @@ Date::~Date() {
 }
 
 int Date::monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+std::string Date::monthsName[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
 void Date::set_offset(long int currTime) {
 	offset = (ceil((double)currTime /( 60 * 60 * 24))) + days_between(kStartYear, kUnixStart);
@@ -93,4 +94,22 @@ unsigned int Date::days_this_month() const {
 		daysInCurrMonth += 1;
 	}
 	return daysInCurrMonth;
+}
+
+std::string Date::month_name() const {
+	int currMonth = month();
+	return monthsName[currMonth-1];
+}
+
+void Date::add_year(int n) {
+	while(n>0) {
+		if((month() == 2) && (day() == 29)) {
+			offset += 364;
+		} else if((month() <= 2 && is_leap_year(year())) || (month() > 2 && is_leap_year(year()+1))) {
+			offset += 366;
+		} else {
+			offset += 365;
+		}
+		n--;
+	}
 }

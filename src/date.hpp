@@ -7,6 +7,7 @@
 
 #ifndef LAB2_SRC_DATE_HPP_
 #define LAB2_SRC_DATE_HPP_
+#include <string>
 
 class Date {
 
@@ -18,6 +19,7 @@ private:
 //friends and inherits
 protected:
 	static int monthsLengthNormalYear[12];
+	static std::string monthsName[12];
 	int kStartYear = 1858;
 	int kUnixStart = 1970;
 	int kJulOffsetDiff1858 = 13;
@@ -31,7 +33,6 @@ protected:
 	int days_between(int startYear = 1858, int = 1970) const;
 
 
-
 public:
 	Date();
 	virtual ~Date(); // = 0;
@@ -40,6 +41,8 @@ public:
 	unsigned int day() const;
 	unsigned int days_per_week() const;
 	unsigned int days_this_month() const;
+	std::string month_name() const;
+	void add_year (int n = 1);
 
 //	virtual unsigned int month() = 0;
 //	virtual unsigned int day() = 0;

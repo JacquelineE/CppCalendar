@@ -29,6 +29,8 @@ int main() {
 	Date * j = new Julian();
 	std::cout << j -> year() << j->month() << "day" << j->day() << std::endl;
 	std::cout << "days in month g: " << g-> days_this_month()  << "jul: " << j->days_this_month() << std::endl;
-
+	std::cout << "monthname g: " << g-> month_name()  << "jul: " << j->month_name() << std::endl;
+	g->add_year(200);
+	std::cout << "addYear"  << "new year" << g->year() << std::endl;
 	return 0;
 }
