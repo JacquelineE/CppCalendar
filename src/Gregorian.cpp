@@ -24,12 +24,12 @@ Gregorian::~Gregorian() {
 }
 
 
-int Gregorian::leap_years_before(int year) {
+int Gregorian::leap_years_before(int year) const {
 	 year--;
 	 return (year / 4) - (year / 100) + (year / 400);
 }
 
-bool Gregorian::is_leap_year(int year) {
+bool Gregorian::is_leap_year(int year) const {
 	 return (year % 4 == 0)  && ((!(year % 100 == 0)) || (year % 400 == 0) );
 }
 

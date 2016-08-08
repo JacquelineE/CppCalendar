@@ -23,21 +23,21 @@ protected:
 	int kJulOffsetDiff1858 = 13;
 	int offset;
 
-	virtual int leap_years_before(int year) = 0;
-	virtual bool is_leap_year(int year) = 0;
+	virtual int leap_years_before(int year) const = 0;
+	virtual bool is_leap_year(int year) const = 0;
 
 	virtual void set_offset(long int currTime);
-	int leap_years_between(int startYear, int endYear);
-	int days_between(int startYear = 1858, int = 1970);
+	int leap_years_between(int startYear, int endYear) const;
+	int days_between(int startYear = 1858, int = 1970) const;
 
 
 
 public:
 	Date();
 	virtual ~Date(); // = 0;
-	unsigned int year();
-	unsigned int month();
-	unsigned int day();
+	unsigned int year() const;
+	unsigned int month() const;
+	unsigned int day() const;
 
 
 //	virtual unsigned int month() = 0;

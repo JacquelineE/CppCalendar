@@ -32,16 +32,16 @@ void Date::set_offset(long int currTime) {
 }
 
 // Returns number of leap years, exclusive endYear
-int Date::leap_years_between(int startYear, int endYear) {
+int Date::leap_years_between(int startYear, int endYear) const {
 	return leap_years_before(endYear) - leap_years_before(startYear+1);
 }
 
-int Date::days_between(int startYear, int endYear) {
+int Date::days_between(int startYear, int endYear) const {
 	int diff = endYear - startYear;
 	return diff * 365 + leap_years_between(startYear, endYear);
 }
 
-unsigned int Date::year() {
+unsigned int Date::year() const {
 	int tentative_years = offset / 365;
 	int remainingDays = offset % 365;
 	if(leap_years_between(kStartYear, kStartYear + tentative_years) >= remainingDays) {
@@ -50,7 +50,7 @@ unsigned int Date::year() {
 	return kStartYear + tentative_years;
 }
 
-unsigned int Date::month() {
+unsigned int Date::month() const {
 	int currYear = year();
 	int daysOffsetCurrYear = offset - days_between(kStartYear, currYear);
 	std::cout << "dayOffset" << daysOffsetCurrYear << std::endl;
@@ -67,7 +67,7 @@ unsigned int Date::month() {
 }
 
 
-unsigned int Date::day() {
+unsigned int Date::day() const {
 	unsigned int currYear = year();
 	unsigned int currMonth = month();
 	unsigned int daysOffsetCurrYear = offset - days_between(kStartYear, currYear);

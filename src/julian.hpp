@@ -14,8 +14,8 @@ public:
 	~Julian();
 
 private:
-	virtual int leap_years_before(int year);
-	virtual bool is_leap_year(int year);
+	virtual int leap_years_before(int year) const;
+	virtual bool is_leap_year(int year) const;
 	virtual void set_offset(long int currTime);
 };
 
