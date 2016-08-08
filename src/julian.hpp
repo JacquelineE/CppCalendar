@@ -14,6 +14,7 @@ public:
 	~Julian();
 
 private:
+	static int const offsetShift = 12;
 	virtual int leap_years_before(int year);
 };
 
