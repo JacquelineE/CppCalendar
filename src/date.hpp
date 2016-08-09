@@ -49,6 +49,9 @@ public:
 //	virtual void add_year() = 0; //int n =1
 //	virtual void add_month() = 0; //int n = 1
 //	virtual int mod_julian_day() = 0;
+
+	int getOffset();
+	//Date& operator++();
 };
 
 #endif /* LAB2_SRC_DATE_HPP_ */

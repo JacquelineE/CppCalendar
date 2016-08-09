@@ -11,12 +11,14 @@
 #include <time.h>
 #include <math.h>       /* ceil */
 
+int Date::monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+
 Date::Date() {
 //	time_t mytime;
 //	k_time(&mytime);
 //	std::cout << "date mytime is " << mytime << std::endl;
-	//monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
-	//set_offset(mytime);
+//	//monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+//	set_offset(mytime);
 }
 
 
@@ -24,7 +26,18 @@ Date::~Date() {
 //	//delete [] monthsLengthNormalYear
 }
 
-int Date::monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+int Date::getOffset() {
+	return offset;
+}
+
+////pre-increment
+//Date& Date::operator++() {
+//	std::cout << "in ++" << std::endl;
+//	//offset += 1;
+//	return *this;
+////	this->offset++; //consider changing when having copy constructor
+////	return *this;
+//}
 
 void Date::set_offset(long int currTime) {
 	offset = (ceil((double)currTime /( 60 * 60 * 24))) + days_between(kStartYear, kUnixStart);

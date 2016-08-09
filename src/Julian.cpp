@@ -18,6 +18,11 @@ Julian::Julian() {
 	set_offset(mytime);
 }
 
+Julian::Julian(Julian const& ref) {
+	std::cerr << "copy" << std::endl;
+	offset = ref.offset;
+}
+
 Julian::~Julian() {
 	// TODO Auto-generated destructor stub
 }

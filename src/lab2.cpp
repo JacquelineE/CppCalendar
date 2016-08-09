@@ -23,11 +23,17 @@ int main() {
 
 	std::cout << std::endl << "lets build gregorian!" << std::endl;
 	Date * g = new Gregorian();
-	int year = g -> year();
-	std::cout << year << g->month() << "day" << g->day() << std::endl;
-	std::cout << std::endl << "lets build julian!" << std::endl;
-	Date * j = new Julian();
-	std::cout << j -> year() << j->month() << "day" << j->day() << std::endl;
+	std::cout << "g offset: " << g->getOffset() << std::endl;
+	Gregorian g2;
+	Gregorian g3(g2);
+
+	++g2; //pre-increment
+	std::cout << "g offset: " << g->getOffset() << std::endl;
+//	int year = g -> year();
+//	std::cout << year << g->month() << "day" << g->day() << std::endl;
+//	std::cout << std::endl << "lets build julian!" << std::endl;
+//	Date * j = new Julian();
+//	std::cout << j -> year() << j->month() << "day" << j->day() << std::endl;
 
 	return 0;
 }

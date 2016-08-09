@@ -11,6 +11,7 @@
 class Julian : public Date {
 public:
 	Julian();
+	Julian(Julian const& ref);
 	~Julian();
 
 private:

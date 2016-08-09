@@ -10,15 +10,18 @@
 
 
 class Gregorian : public Date {
-
 protected:
 	virtual int leap_years_before(int year);
 	virtual bool is_leap_year(int year);
 	//int year();
 public:
 	Gregorian();// = default;
+	Gregorian(Gregorian const& ref);
 	~Gregorian();
 	//int year();
+
+
+	Gregorian& operator++();
 };
 
 #endif /* LAB2_SRC_GREGORIAN_HPP_ */
