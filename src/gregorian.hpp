@@ -22,6 +22,7 @@ public:
 
 
 	Gregorian& operator++();
+	const Gregorian operator++(int);
 };
 
 #endif /* LAB2_SRC_GREGORIAN_HPP_ */

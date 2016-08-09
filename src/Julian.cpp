@@ -43,3 +43,16 @@ void Julian::set_offset(long int currTime) {
 	offset -= kJulOffsetDiff1858;
 	std::cout << "in set_offset jul " << offset << std::endl;
 }
+
+Julian& Julian::operator++() {
+	std::cout << "pre++ " << ((*this).offset) << std::endl;
+	++(*this).offset;
+	return *this;
+}
+
+const Julian Julian::operator++(int) {
+	std::cout << "post++ " << std::endl;
+	const Julian preValue = *this;
+	++(*this).offset;
+	return preValue;
+}

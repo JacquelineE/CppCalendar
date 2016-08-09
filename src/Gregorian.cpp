@@ -39,9 +39,16 @@ bool Gregorian::is_leap_year(int year) const {
 }
 
 Gregorian& Gregorian::operator++() {
-	std::cout << "++ " << ((*this).offset) << std::endl;
+	std::cout << "pre++ " << ((*this).offset) << std::endl;
 	++(*this).offset;
 	return *this;
+}
+
+const Gregorian Gregorian::operator++(int) {
+	std::cout << "post++ " << std::endl;
+	const Gregorian preValue = *this;
+	++(*this).offset;
+	return preValue;
 }
 
 

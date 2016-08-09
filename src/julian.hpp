@@ -14,6 +14,9 @@ public:
 	Julian(Julian const& ref);
 	~Julian();
 
+	Julian& operator++();
+	const Julian operator++(int);
+
 private:
 	virtual int leap_years_before(int year) const;
 	virtual bool is_leap_year(int year) const;
