@@ -11,8 +11,6 @@
 #include <time.h>
 #include <math.h>       /* ceil */
 
-int Date::monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
-
 Date::Date() {
 //	time_t mytime;
 //	k_time(&mytime);
@@ -30,14 +28,8 @@ int Date::getOffset() {
 	return offset;
 }
 
-////pre-increment
-//Date& Date::operator++() {
-//	std::cout << "in ++" << std::endl;
-//	//offset += 1;
-//	return *this;
-////	this->offset++; //consider changing when having copy constructor
-////	return *this;
-//}
+int Date::monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+std::string Date::monthsName[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
 void Date::set_offset(long int currTime) {
 	offset = (ceil((double)currTime /( 60 * 60 * 24))) + days_between(kStartYear, kUnixStart);
@@ -45,16 +37,16 @@ void Date::set_offset(long int currTime) {
 }
 
 // Returns number of leap years, exclusive endYear
-int Date::leap_years_between(int startYear, int endYear) {
+int Date::leap_years_between(int startYear, int endYear) const {
 	return leap_years_before(endYear) - leap_years_before(startYear+1);
 }
 
-int Date::days_between(int startYear, int endYear) {
+int Date::days_between(int startYear, int endYear) const {
 	int diff = endYear - startYear;
 	return diff * 365 + leap_years_between(startYear, endYear);
 }
 
-unsigned int Date::year() {
+unsigned int Date::year() const {
 	int tentative_years = offset / 365;
 	int remainingDays = offset % 365;
 	if(leap_years_between(kStartYear, kStartYear + tentative_years) >= remainingDays) {
@@ -63,7 +55,7 @@ unsigned int Date::year() {
 	return kStartYear + tentative_years;
 }
 
-unsigned int Date::month() {
+unsigned int Date::month() const {
 	int currYear = year();
 	int daysOffsetCurrYear = offset - days_between(kStartYear, currYear);
 	std::cout << "dayOffset" << daysOffsetCurrYear << std::endl;
@@ -80,7 +72,7 @@ unsigned int Date::month() {
 }
 
 
-unsigned int Date::day() {
+unsigned int Date::day() const {
 	unsigned int currYear = year();
 	unsigned int currMonth = month();
 	unsigned int daysOffsetCurrYear = offset - days_between(kStartYear, currYear);
@@ -93,4 +85,35 @@ unsigned int Date::day() {
 	}
 	return daysOffsetCurrYear - daysToStartOfMonth;
 
+}
+
+unsigned int Date::days_per_week() const {
+	return 7;
+}
+
+unsigned int Date::days_this_month() const {
+	int currMonth = month();
+	int daysInCurrMonth = monthsLengthNormalYear[currMonth-1];
+	if(currMonth == 2 && is_leap_year(year())) {
+		daysInCurrMonth += 1;
+	}
+	return daysInCurrMonth;
+}
+
+std::string Date::month_name() const {
+	int currMonth = month();
+	return monthsName[currMonth-1];
+}
+
+void Date::add_year(int n) {
+	while(n>0) {
+		if((month() == 2) && (day() == 29)) {
+			offset += 364;
+		} else if((month() <= 2 && is_leap_year(year())) || (month() > 2 && is_leap_year(year()+1))) {
+			offset += 366;
+		} else {
+			offset += 365;
+		}
+		n--;
+	}
 }

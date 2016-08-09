@@ -19,7 +19,7 @@ Julian::Julian() {
 }
 
 Julian::Julian(Julian const& ref) {
-	std::cerr << "copy" << std::endl;
+	std::cout << "copy" << std::endl;
 	offset = ref.offset;
 }
 
@@ -29,12 +29,12 @@ Julian::~Julian() {
 
 //TODO should count differently since this object only see this method (the
 //other way to count leap years is private... why do we get the same result?)
-int Julian::leap_years_before(int year) {
+int Julian::leap_years_before(int year) const {
 	 year--;
 	 return (year / 4);
 }
 
-bool Julian::is_leap_year(int year) {
+bool Julian::is_leap_year(int year) const {
 	 return (year % 4 == 0);
 }
 
