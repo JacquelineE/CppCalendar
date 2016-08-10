@@ -10,6 +10,8 @@
 #include "kattistime.hpp"
 #include <iostream>
 #include <time.h>
+#include <stdlib.h> //abs
+#include <typeinfo> //typeid
 
 namespace lab2 {
 
@@ -86,5 +88,15 @@ Julian& Julian::operator-=(const int& n) {
     return *this; // return the result by reference
 }
 
+//Julian& Julian::operator=(const Date& ref) {
+//	if(typeid(*this)==typeid(ref)) {
+//		//(*this).offset = ref.offset;
+//	} else {
+//		//TODO implementera konstruktor Julian(year, month, day)
+//		//och returnera den
+//	}
+//	std::cout << "implement operator= plz" << std::endl;
+//	return *this;
+//}
 
 }

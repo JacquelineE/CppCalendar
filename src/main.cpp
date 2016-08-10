@@ -60,8 +60,15 @@ int main() {
 	std::cout << "*j==*g: " << (*j==*g) << std::endl;
 	std::cout << "*j<=*g: " << (*j<=*g) << std::endl;
 	std::cout << "j2<=*j: " << (j2<=*j) << "  j2>=*j: " << (j2>=*j) << std::endl;
-	std::cout << *j << "." << std::endl;
-
+	std::cout << "*j: " << *j << ". j2: " << j2 << "." << std::endl << "*j = j2" << std::endl;
+	std::cout << "offset *j=" << (*j).getOffset() << std::endl;
+	std::cout << "offset j2=" << (j2).getOffset() << std::endl;
+	*j=j2;
+	std::cout << "AFTER: offset *j=" << (*j).getOffset() << std::endl;
+	std::cout << "offset *g=" << (*g).getOffset() << std::endl;
+	*g=j2;
+	std::cout << "AFTER: offset j2=" << (j2).getOffset() << std::endl;
+	std::cout << "offset *g=" << (*g).getOffset() << std::endl;
 
 //	std::cout << j -> year() << j->month() << "day" << j->day() << std::endl;
 //	std::cout << "days in month g: " << g-> days_this_month()  << "jul: " << j->days_this_month() << std::endl;

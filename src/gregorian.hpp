@@ -18,17 +18,19 @@ protected:
 public:
 	Gregorian();// = default;
 	Gregorian(Gregorian const& ref);
-	//Gregorian(Julian const& ref);
+	//Gregorian(int year, int month, int day);
 	~Gregorian();
 	//int year();
 
-
-	Gregorian& operator++();
-	Gregorian& operator--();
+	//we can't instantiate date because of pure virtual methods in Date?
+	//therefore they are implemented in subclasses...
+	virtual Gregorian& operator++();
+	virtual Gregorian& operator--();
 	const Gregorian operator++(int);
 	const Gregorian operator--(int);
-	Gregorian& operator+=(const int& n);
-	Gregorian& operator-=(const int& n);
+	virtual Gregorian& operator+=(const int& n);
+	virtual Gregorian& operator-=(const int& n);
+	friend Date& Date::operator=(const Date& ref);
 };
 
 }
