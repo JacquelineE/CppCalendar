@@ -11,6 +11,8 @@
 #include <iostream>
 #include <time.h>
 
+namespace lab2 {
+
 Julian::Julian() {
 	time_t mytime;
 	k_time(&mytime);
@@ -20,7 +22,7 @@ Julian::Julian() {
 
 Julian::Julian(Julian const& ref) {
 	std::cout << "copy" << std::endl;
-	offset = ref.offset;
+	(*this).offset = ref.offset;
 }
 
 Julian::~Julian() {
@@ -50,9 +52,39 @@ Julian& Julian::operator++() {
 	return *this;
 }
 
+Julian& Julian::operator--() {
+	std::cout << "pre-- " << ((*this).offset) << std::endl;
+	--(*this).offset;
+	return *this;
+}
+
 const Julian Julian::operator++(int) {
 	std::cout << "post++ " << std::endl;
 	const Julian preValue = *this;
 	++(*this).offset;
 	return preValue;
+}
+
+const Julian Julian::operator--(int) {
+	std::cout << "post-- " << std::endl;
+	const Julian preValue = *this;
+	--(*this).offset;
+	return preValue;
+}
+
+Julian& Julian::operator+=(const int& n) {
+    /* addition of rhs to *this takes place here */
+	std::cout << "+= " << std::endl;
+	(*this).offset += n;
+    return *this; // return the result by reference
+}
+
+Julian& Julian::operator-=(const int& n) {
+    /* addition of rhs to *this takes place here */
+	std::cout << "-= " << std::endl;
+	(*this).offset -= n;
+    return *this; // return the result by reference
+}
+
+
 }

@@ -10,6 +10,9 @@
 #include "kattistime.hpp"
 #include <iostream>
 #include <time.h>
+#include <stdlib.h> //abs
+
+namespace lab2 {
 
 Gregorian::Gregorian() {
 	time_t mytime;
@@ -20,7 +23,7 @@ Gregorian::Gregorian() {
 
 Gregorian::Gregorian(Gregorian const& ref) {
 	std::cout << "copy" << std::endl;
-	offset = ref.offset;
+	(*this).offset = ref.offset;
 }
 
 Gregorian::~Gregorian() {
@@ -44,6 +47,12 @@ Gregorian& Gregorian::operator++() {
 	return *this;
 }
 
+Gregorian& Gregorian::operator--() {
+	std::cout << "pre-- " << ((*this).offset) << std::endl;
+	--(*this).offset;
+	return *this;
+}
+
 const Gregorian Gregorian::operator++(int) {
 	std::cout << "post++ " << std::endl;
 	const Gregorian preValue = *this;
@@ -51,5 +60,23 @@ const Gregorian Gregorian::operator++(int) {
 	return preValue;
 }
 
+const Gregorian Gregorian::operator--(int) {
+	std::cout << "post-- " << std::endl;
+	const Gregorian preValue = *this;
+	--(*this).offset;
+	return preValue;
+}
 
+Gregorian& Gregorian::operator+=(const int& n) {
+	std::cout << "+= " << std::endl;
+	(*this).offset += n;
+    return *this;
+}
 
+Gregorian& Gregorian::operator-=(const int& n) {
+	std::cout << "-= " << std::endl;
+	(*this).offset -= n;
+    return *this;
+}
+
+}
