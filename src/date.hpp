@@ -48,6 +48,8 @@ namespace lab2 {
 		unsigned int days_this_month() const;
 		std::string month_name() const;
 		void add_year (int n = 1);
+		void add_month(int n = 1);
+		void add_day(int n = 1);
 
 	//	virtual unsigned int month() = 0;
 	//	virtual unsigned int day() = 0;
