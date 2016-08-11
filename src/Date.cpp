@@ -144,7 +144,7 @@ unsigned int Date::year() const {
 unsigned int Date::month() const {
 	int currYear = year();
 	int daysOffsetCurrYear = offset - days_between(kStartYear, currYear);
-	std::cout << "dayOffset" << daysOffsetCurrYear << std::endl;
+	//std::cout << "dayOffset" << daysOffsetCurrYear << std::endl;
 	bool isLeapYear = is_leap_year(currYear);
 	unsigned int index = 0;
 	while (daysOffsetCurrYear > 0) {
@@ -181,22 +181,50 @@ void Date::add_year(int n) {
 	if (n == 0) {
 		return;
 	}
-	bool addOneAtEnd = false;
-	if (month() == 2 && day() == 29 && is_leap_year(year() + n)) {
-		addOneAtEnd = true;
+	int daysToAdd = 0;
+	if(is_leap_year(year()) && month() <= 2) {
+		//must add extra day
+		daysToAdd++;
 	}
-	while (n > 0) {
-		if ((month() == 2) && (day() == 29)) {
-			offset += 364;
-		} else if ((month() <= 2 && is_leap_year(year()))
-				|| (month() > 2 && is_leap_year(year() + 1))) {
-			offset += 366;
-		} else {
-			offset += 365;
+	//add remaining days on currYear
+	for(unsigned int i = 12; i > month(); --i) {
+		daysToAdd  += monthsLengthNormalYear[i-1];
+	}
+	daysToAdd += (monthsLengthNormalYear[month()-1] - day());
+
+	//add all years in between curr year and last year
+	int i = 1;
+	while(i<n) {
+		if(is_leap_year(year()+i)) {
+			daysToAdd++;
 		}
-		n--;
+		daysToAdd += 365;
+		i++;
 	}
+	//add remaining days on last year
+
+	if(is_leap_year(year()+n)) {
+		if(month() > 2) {
+			daysToAdd++;
+		}
+	} else {
+		if(month() == 2 && day()== 29) {
+			daysToAdd--;
+			std::cout << "ghjl"<< month() << day() ;
+		}
+	}
+
+
+	//add startdays + days in startmonths
+	for(int i = 0; i <month()-1; i++) {
+		daysToAdd += monthsLengthNormalYear[i];
+	}
+	daysToAdd += day();
+
+	offset += daysToAdd;
+
 }
+
 
 unsigned int Date::days_this_month() const {
 	int currMonth = month();
@@ -206,12 +234,6 @@ unsigned int Date::days_this_month() const {
 	}
 	return daysInCurrMonth;
 }
-
-std::string Date::month_name() const {
-	int currMonth = month();
-	return monthsName[currMonth - 1];
-}
-
 void Date::add_month(int n) {
 	if (n == 0) {
 		return;

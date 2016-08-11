@@ -73,11 +73,20 @@ int main() {
 
 	Date * g2 = new Gregorian();
 	cout << *g2 << endl;
-	//Date * j1 = new Julian();
-	//cout << *j1 << endl;
 	Gregorian g;
 	Gregorian g3(g);
+	g.add_year(3);
+	g.add_month(7);
+	g.add_day(19);
+	/////////////////
+	cout << "5y " << g << endl;
+	for(int i = 0; i < 5; i++) {
+		g.add_year(1);
+		cout << g<< endl;
+	}
 
-	cout << g << endl;
+
+
+
 	return 0;
 }
