@@ -32,6 +32,10 @@ int Date::getOffset() {
 	return offset;
 }
 
+int Date::getJulian() {
+	return julian_day_number;
+}
+
 //	int Date::offset_protected() {
 //		return offset;
 //	}
@@ -89,15 +93,20 @@ bool Date::operator>=(const Date& ref) {
 
 Date& Date::operator=(const Date& ref) {
 	(*this).offset = ref.offset;
+	(*this).julian_day_number = ref.julian_day_number;
 	if(typeid(*this)!=typeid(ref)) {
 		if(typeid(ref)==typeid(Julian)) {
-			int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
-			std::cout << "lol hello different julian:" << diff << std::endl;
-			(*this).offset += diff;
+			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
+			std::cerr << "lol hello different julian:" << std::endl;
+			//(*this).offset -= diff;
+			(*this).offset += kJulOffsetDiff1858;
+			//TODO store julian_day_number
 		} else {
-			int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
-			std::cout << "lol hello different gregorian:" << diff << std::endl;
-			(*this).offset -= diff;
+			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
+			std::cerr << "lol hello different gregorian:" << std::endl;
+			//(*this).offset += diff;
+			(*this).offset += kJulOffsetDiff1858;
+			//TODO store julian_day_number
 		}
 	}
 	return *this;
@@ -118,7 +127,7 @@ std::string Date::monthsName[12] = { "January", "February", "March", "April",
 void Date::set_offset(long int currTime) {
 	offset = (ceil((double) currTime / (60 * 60 * 24)))
 			+ days_between(kStartYear, kUnixStart);
-	std::cout << "in set_offset " << offset << std::endl;
+	std::cerr << "in set_offset " << offset << std::endl;
 }
 
 // Returns number of leap years, exclusive endYear
@@ -268,6 +277,10 @@ void Date::add_month(int n) {
 	offset += startDay -1;
 
 
+}
+
+int Date::mod_julian_day() const {
+		return (*this).julian_day_number - 2400000;
 }
 
 //just for testing purpose

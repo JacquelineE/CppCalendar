@@ -14,11 +14,14 @@ class Gregorian : public Date {
 protected:
 	virtual int leap_years_before(int year) const;
 	virtual bool is_leap_year(int year) const;
+	virtual int calc_julian_day_number(int year, int month, int day) const;
+	virtual int get_offset_from_julian_day(int julian_day) const;
+	virtual int julian_day_on_start_offset() const;
 	//int year();
 public:
 	Gregorian();// = default;
 	Gregorian(Gregorian const& ref);
-	//Gregorian(int year, int month, int day);
+	Gregorian(int year, int month, int day);
 	~Gregorian();
 	//int year();
 
