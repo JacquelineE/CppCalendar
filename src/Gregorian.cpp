@@ -20,12 +20,12 @@ namespace lab2 {
 Gregorian::Gregorian() {
 	time_t mytime;
 	k_time(&mytime);
-	std::cout << "gregorian mytime is " << mytime << std::endl;
+	std::cerr << "gregorian mytime is " << mytime << std::endl;
 	set_offset(mytime);
 }
 
 Gregorian::Gregorian(Gregorian const& ref) {
-	std::cout << "copy" << std::endl;
+	std::cerr << "copy" << std::endl;
 	(*this).offset = ref.offset;
 }
 
@@ -58,39 +58,39 @@ bool Gregorian::is_leap_year(int year) const {
 }
 
 Gregorian& Gregorian::operator++() {
-	std::cout << "pre++ " << ((*this).offset) << std::endl;
+	std::cerr << "pre++ " << ((*this).offset) << std::endl;
 	++(*this).offset;
 	return *this;
 }
 
 Gregorian& Gregorian::operator--() {
-	std::cout << "pre-- " << ((*this).offset) << std::endl;
+	std::cerr << "pre-- " << ((*this).offset) << std::endl;
 	--(*this).offset;
 	return *this;
 }
 
 const Gregorian Gregorian::operator++(int) {
-	std::cout << "post++ " << std::endl;
+	std::cerr << "post++ " << std::endl;
 	const Gregorian preValue = *this;
 	++(*this).offset;
 	return preValue;
 }
 
 const Gregorian Gregorian::operator--(int) {
-	std::cout << "post-- " << std::endl;
+	std::cerr << "post-- " << std::endl;
 	const Gregorian preValue = *this;
 	--(*this).offset;
 	return preValue;
 }
 
 Gregorian& Gregorian::operator+=(const int& n) {
-	std::cout << "+= " << std::endl;
+	std::cerr << "+= " << std::endl;
 	(*this).offset += n;
     return *this;
 }
 
 Gregorian& Gregorian::operator-=(const int& n) {
-	std::cout << "-= " << std::endl;
+	std::cerr << "-= " << std::endl;
 	(*this).offset -= n;
     return *this;
 }

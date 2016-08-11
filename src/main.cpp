@@ -14,71 +14,83 @@
 #include "kattistime.hpp"
 //using namespace std;
 using namespace lab2;
-
+using namespace std;
 int main() {
 	//set current time before testing
 	time_t tp;
 	time(&tp);
-	std::cout << "time is " << tp << std::endl;
+	std::cerr << "time is " << tp << std::endl;
 	set_k_time(tp);
 
-	std::cout << std::endl << "lets build gregorian!" << std::endl;
+
+	std::cerr << std::endl << "lets build gregorian!" << std::endl;
 	Date * g = new Gregorian();
 	Gregorian g2;
-	std::cout << std::endl << "lets copy construct gregorian!" << std::endl;
+	std::cerr << std::endl << "lets copy construct gregorian!" << std::endl;
 	Gregorian g3(g2);
-	std::cout << std::endl << "lets decrement gregorian!" << std::endl;
-	std::cout << "g2 offset: " << g2.getOffset() << std::endl;
+	std::cerr << std::endl << "lets decrement gregorian!" << std::endl;
+	std::cerr << "g2 offset: " << g2.getOffset() << std::endl;
 	--g2; //pre-decrement
-	std::cout << "g2 offset: " << g2.getOffset() << std::endl;
+	std::cerr << "g2 offset: " << g2.getOffset() << std::endl;
 	g2--;
-	std::cout << "g2 offset: " << g2.getOffset() << std::endl;
+	std::cerr << "g2 offset: " << g2.getOffset() << std::endl;
 	g2-=10;
-	std::cout << "g2 offset: " << g2.getOffset() << std::endl;
-	std::cout << "diff g2-g3: " << g2-g3 << std::endl;
-	std::cout << "g2!=g3: " << (g2!=g3) << std::endl;
-	std::cout << "g*!=g3: " << (*g!=g3) << std::endl;
+	std::cerr << "g2 offset: " << g2.getOffset() << std::endl;
+	std::cerr << "diff g2-g3: " << g2-g3 << std::endl << std::endl;
 
 	int year = g -> year();
-	std::cout << year << g->month() << "day" << g->day() << std::endl;
+	std::cerr << year << g->month() << "day" << g->day() << std::endl;
 
-	std::cout << std::endl << "lets build julian!" << std::endl;
+	std::cerr << std::endl << "lets build julian!" << std::endl;
 	Date * j = new Julian();
 	Julian j2;
-	std::cout << std::endl << "lets copy construct Julian!" << std::endl;
+	std::cerr << std::endl << "lets copy construct Julian!" << std::endl;
 	Julian j3(j2);
-	std::cout << std::endl << "lets decrement Julian!" << std::endl;
-	std::cout << "j2 offset: " << j2.getOffset() << std::endl;
+	std::cerr << std::endl << "lets decrement Julian!" << std::endl;
+	std::cerr << "j2 offset: " << j2.getOffset() << std::endl;
 	--j2; //pre-decrement
-	std::cout << "j2 offset: " << j2.getOffset() << std::endl;
+	std::cerr << "j2 offset: " << j2.getOffset() << std::endl;
 	j2--;
-	std::cout << "j2 offset: " << j2.getOffset() << std::endl;
+	std::cerr << "j2 offset: " << j2.getOffset() << std::endl;
 	j2 += 10;
-	std::cout << "j2 offset: " << j2.getOffset() << std::endl;
-	std::cout << "j3!=g3: " << (j3!=g3) << "  j3==g3: " << (j3==g3) << std::endl;
-	std::cout << "*j-*g: " << (*j-*g) << std::endl;
-	std::cout << "*j==*g: " << (*j==*g) << std::endl;
-	std::cout << "*j<=*g: " << (*j<=*g) << std::endl;
-	std::cout << "j2<=*j: " << (j2<=*j) << "  j2>=*j: " << (j2>=*j) << std::endl;
-	std::cout << "*j: " << *j << ". j2: " << j2 << "." << std::endl << "*j = j2" << std::endl;
-	std::cout << "offset *j=" << (*j).getOffset() << std::endl;
-	std::cout << "offset j2=" << (j2).getOffset() << std::endl;
+	std::cerr << "j2 offset: " << j2.getOffset() << std::endl;
+	std::cerr << "j2<=*j: " << (j2<=*j) << "  j2>=*j: " << (j2>=*j) << std::endl;
+	std::cerr << "*j: " << *j << ". j2: " << j2 << "." << std::endl << "*j = j2" << std::endl;
+	std::cerr << "offset *j=" << (*j).getOffset() << std::endl;
+	std::cerr << "offset j2=" << (j2).getOffset() << std::endl;
 	*j=j2;
-	std::cout << "AFTER: offset *j=" << (*j).getOffset() << std::endl;
-	std::cout << "offset *g=" << (*g).getOffset() << std::endl;
+	std::cerr << "AFTER: offset *j=" << (*j).getOffset() << std::endl;
+	std::cerr << "offset *g=" << (*g).getOffset() << std::endl;
 	*g=j2;
-	std::cout << "AFTER: offset j2=" << (j2).getOffset() << std::endl;
-	std::cout << "offset *g=" << (*g).getOffset() << std::endl;
-	std::cout << "j2 " << j2 << "  *g " << *g << std::endl;
-//	std::cout << std::endl << "lets build gregorian again!" << std::endl;
+	std::cerr << "AFTER: offset j2=" << (j2).getOffset() << std::endl;
+	std::cerr << "offset *g=" << (*g).getOffset() << std::endl;
+	std::cerr << "j2 " << j2 << "  *g " << *g << std::endl;
+//	std::cerr << std::endl << "lets build gregorian again!" << std::endl;
 //	Gregorian(1900, 2, 10);
 
 
-//	std::cout << j -> year() << j->month() << "day" << j->day() << std::endl;
-//	std::cout << "days in month g: " << g-> days_this_month()  << "jul: " << j->days_this_month() << std::endl;
-//	std::cout << "monthname g: " << g-> month_name()  << "jul: " << j->month_name() << std::endl;
+//	std::cerr << j -> year() << j->month() << "day" << j->day() << std::endl;
+//	std::cerr << "days in month g: " << g-> days_this_month()  << "jul: " << j->days_this_month() << std::endl;
+//	std::cerr << "monthname g: " << g-> month_name()  << "jul: " << j->month_name() << std::endl;
 //	g->add_year(200);
-//	std::cout << "addYear"  << "new year" << g->year() << std::endl;
+//	std::cerr << "addYear"  << "new year" << g->year() << std::endl;
+
+	Date * gr2 = new Gregorian();
+	cout << *gr2 << endl;
+	Gregorian gr;
+	Gregorian gr3(gr);
+	gr.add_year(2);
+	gr.add_month(7);
+	gr.add_day(20);
+	/////////////////
+	cout << "5y " << gr << endl;
+	for(int i = 0; i < 100; i++) {
+		gr.add_month(15);
+		cout << gr << endl;
+	}
+
+
+
 
 	return 0;
 }

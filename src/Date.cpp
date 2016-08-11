@@ -57,8 +57,7 @@ int Date::operator-(const Date& ref) {
 		int diff = leapDaysThis - leapDaysRef;
 		diff = (*this).offset - ref.offset + kJulOffsetDiff1858 + diff;
 	}
-	std::cout << "diff " << typeid(*this).name() << "-" << typeid(ref).name()
-			<< " = " << diff << std::endl;
+	//std::cout << "diff " << typeid(*this).name() << "-" << typeid(ref).name() << " = " << diff << std::endl;
 	return diff;
 }
 
@@ -93,12 +92,12 @@ Date& Date::operator=(const Date& ref) {
 	if(typeid(*this)!=typeid(ref)) {
 		if(typeid(ref)==typeid(Julian)) {
 			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
-			std::cout << "lol hello different julian:" << std::endl;
+			std::cerr << "lol hello different julian:" << std::endl;
 			//(*this).offset -= diff;
 			(*this).offset += kJulOffsetDiff1858;
 		} else {
 			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
-			std::cout << "lol hello different gregorian:" << std::endl;
+			std::cerr << "lol hello different gregorian:" << std::endl;
 			//(*this).offset += diff;
 			(*this).offset += kJulOffsetDiff1858;
 		}
@@ -121,7 +120,7 @@ std::string Date::monthsName[12] = { "January", "February", "March", "April",
 void Date::set_offset(long int currTime) {
 	offset = (ceil((double) currTime / (60 * 60 * 24)))
 			+ days_between(kStartYear, kUnixStart);
-	std::cout << "in set_offset " << offset << std::endl;
+	std::cerr << "in set_offset " << offset << std::endl;
 }
 
 // Returns number of leap years, exclusive endYear
@@ -147,7 +146,7 @@ unsigned int Date::year() const {
 unsigned int Date::month() const {
 	int currYear = year();
 	int daysOffsetCurrYear = offset - days_between(kStartYear, currYear);
-	std::cout << "dayOffset" << daysOffsetCurrYear << std::endl;
+	//std::cout << "dayOffset" << daysOffsetCurrYear << std::endl;
 	bool isLeapYear = is_leap_year(currYear);
 	unsigned int index = 0;
 	while (daysOffsetCurrYear > 0) {
@@ -184,22 +183,48 @@ void Date::add_year(int n) {
 	if (n == 0) {
 		return;
 	}
-	bool addOneAtEnd = false;
-	if (month() == 2 && day() == 29 && is_leap_year(year() + n)) {
-		addOneAtEnd = true;
+	int daysToAdd = 0;
+	if(is_leap_year(year()) && month() <= 2) {
+		//must add extra day
+		daysToAdd++;
 	}
-	while (n > 0) {
-		if ((month() == 2) && (day() == 29)) {
-			offset += 364;
-		} else if ((month() <= 2 && is_leap_year(year()))
-				|| (month() > 2 && is_leap_year(year() + 1))) {
-			offset += 366;
-		} else {
-			offset += 365;
+	//add remaining days on currYear
+	for(unsigned int i = 12; i > month(); --i) {
+		daysToAdd  += monthsLengthNormalYear[i-1];
+	}
+	daysToAdd += (monthsLengthNormalYear[month()-1] - day());
+
+	//add all years in between curr year and last year
+	int i = 1;
+	while(i<n) {
+		if(is_leap_year(year()+i)) {
+			daysToAdd++;
 		}
-		n--;
+		daysToAdd += 365;
+		i++;
 	}
+	//add remaining days on last year
+
+	if(is_leap_year(year()+n)) {
+		if(month() > 2) {
+			daysToAdd++;
+		}
+	} else {
+		if(month() == 2 && day()== 29) {
+			daysToAdd--;
+			std::cout << "ghjl"<< month() << day() ;
+		}
+	}
+	//add startdays + days in startmonths
+	for(int i = 0; i <month()-1; i++) {
+		daysToAdd += monthsLengthNormalYear[i];
+	}
+	daysToAdd += day();
+
+	offset += daysToAdd;
+
 }
+
 
 unsigned int Date::days_this_month() const {
 	int currMonth = month();
@@ -209,75 +234,43 @@ unsigned int Date::days_this_month() const {
 	}
 	return daysInCurrMonth;
 }
-
-std::string Date::month_name() const {
-	int currMonth = month();
-	return monthsName[currMonth - 1];
-}
-
 void Date::add_month(int n) {
-	if (n == 0) {
-		return;
-	}
+
+	int daysToAdd = 0;
 	int startDay = day();
-	int nrOfYears = n / 12;
-	add_year(nrOfYears);
-	int nrOfMonthsToAdd = n % 12;
-	int leapYearFactor = 0;
-	if (month() == 2 && is_leap_year(year())) {
-		leapYearFactor = 1;
+	int startMonth = month();
+
+	//add days to get curr offset == 1 jan next month
+	if(!(startMonth == 2 && startDay == 29)) {
+		offset += monthsLengthNormalYear[startMonth-1] -startDay + 1;
 	}
-	offset += monthsLengthNormalYear[month() - 1] - startDay + leapYearFactor;
-	leapYearFactor = 0;
-	int currMonth;
-	for (unsigned int i = month(); i < month() + nrOfMonthsToAdd; ++i) {
-		currMonth = i;
-		if (i > 12) {
-			currMonth = i % 12;
-		}
-		offset += monthsLengthNormalYear[currMonth - 1];
-		if (currMonth == 2 && is_leap_year(year())) {
+	//compensate for feb having one extra day on leap_years
+	if(is_leap_year(year()) && startMonth == 2) {
+		offset++;
+	}
+	//add whole months
+	int index = month();
+	for(int i = 0; i < n-1; i++) {
+		if(is_leap_year(year()) && index == 2) {
 			offset++;
 		}
+		offset += monthsLengthNormalYear[index-1];
+		index++;
+		if(index > 12) {
+			index = index % 12;
+		}
 	}
-	offset += startDay;
+	//minus 1 since we are on 1st jan instead of last day in month
+	if(startDay > monthsLengthNormalYear[month()-1]) {
+		startDay = monthsLengthNormalYear[month()-1];
+		if(is_leap_year(year()) && month() == 2) {
+			startDay++;
+		}
+	}
+	offset += startDay -1;
+
+
 }
-
-
-//1 dela me 12 + ta hänsyn till skottår för se antalet år -> anroppa ad year på detta om det e >= 1
-
-//2. gå fram till det datum som gäller (kompensera för att det ev inte e möjligt att komma åt just det datumet om månaden e för kort)
-
-//3. jobba dig bakåt tills du kommer till den månad du började me, ta me de dagar som tillhör slutet på den månaden
-//
-//	if(n == 0) {
-//		return;
-//	}
-//	int startDay = day();
-//	while(n>1) {
-//		int currMonth = month();
-//		if(currMonth > 12) {
-//			currMonth = currMonth % 12;
-//		}
-//		if(currMonth == 2 && is_leap_year(year())) {
-//			offset += 29;
-//		} else {
-//			offset += std::min(monthsLengthNormalYear[currMonth-1], (monthsLengthNormalYear[currMonth] + monthsLengthNormalYear[currMonth-1] - day()));
-//		}
-//		n--;
-//	}
-//	int currMonth = month();
-//	if(currMonth == 2 && is_leap_year(year())) {
-//		offset += 29 - day(); //remaining days in month
-//	} else {
-//		offset += monthsLengthNormalYear[currMonth-1] - day(); //remaining days in month
-//	}
-//	int nextMonth = currMonth+1;
-//	if(nextMonth >12) {
-//		nextMonth = nextMonth % 12;
-//	}
-//	offset += std::min(startDay, monthsLengthNormalYear[nextMonth-1]); //offset = same day in next month
-//}
 
 //just for testing purpose
 void Date::add_day(int n) {
