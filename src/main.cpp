@@ -25,6 +25,7 @@ int main() {
 
 	std::cerr << std::endl << "lets build gregorian!" << std::endl;
 	Date * g = new Gregorian();
+	std::cerr << *g << std::endl;
 	Gregorian g2;
 	std::cerr << std::endl << "lets copy construct gregorian!" << std::endl;
 	Gregorian g3(g2);
@@ -43,6 +44,7 @@ int main() {
 
 	std::cerr << std::endl << "lets build julian!" << std::endl;
 	Date * j = new Julian();
+	std::cerr << *j << std::endl;
 	Julian j2;
 	std::cerr << std::endl << "lets copy construct Julian!" << std::endl;
 	Julian j3(j2);
@@ -65,17 +67,25 @@ int main() {
 	std::cerr << "AFTER: offset j2=" << (j2).getOffset() << std::endl;
 	std::cerr << "offset *g=" << (*g).getOffset() << std::endl;
 	std::cerr << "j2 " << j2 << "  *g " << *g << std::endl;
-	Gregorian gToday2;
-	std::cerr << std::endl << "lets build gregorian again!" << std::endl;
-	Gregorian gToday(2016, 8, 11);
-	std::cerr << "MJD today: " << gToday.mod_julian_day() << std::endl;
-	std::cerr << "MJD today2: " << gToday2.mod_julian_day() << std::endl;
-	Gregorian g1858(1858, 1, 1);
-	std::cerr << "MJD 1858: " << g1858.mod_julian_day() << std::endl;
-	Gregorian g1858_2(g1858);
-	std::cerr << "MJD 1858_2: " << g1858_2.mod_julian_day() << std::endl;
+	Julian gToday2;
+	std::cerr << std::endl << "lets build julian again!" << std::endl;
+	Julian gToday(2016, 8, 11);
+	std::cerr << "MJD today:" << gToday.mod_julian_day() << " offset:" << gToday.getOffset() << std::endl;
+	std::cerr << "MJD today2:" << gToday2.mod_julian_day() << " offset today2:" << gToday2.getOffset() << std::endl;
+	Julian g1858(1858, 1, 1);
+	std::cerr << "MJD 1858:" << g1858.mod_julian_day() << " offset:" << g1858.getOffset() << std::endl;
+	Julian g1857(1857, 12, 31);
+	std::cerr << "MJD 1857:" << g1857.mod_julian_day() << " offset:" << g1857.getOffset() << std::endl;
 
-
+//	//hitta när offset = 0 för julian:
+//	int off = gToday2.getOffset();
+//	while(off > 0) {
+//		--gToday2;
+//		--off;
+//		if(gToday2.getOffset() == 0) {
+//			std::cerr << "offset is 0 on: " << gToday2 << "| julian_day_number:" << gToday2.getJulian() << std::endl;
+//		}
+//	}
 
 
 //	std::cerr << j -> year() << j->month() << "day" << j->day() << std::endl;

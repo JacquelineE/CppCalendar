@@ -32,7 +32,7 @@ Julian::Julian(Julian const& ref) {
 Julian::Julian(int year, int month, int day) {
 	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
 	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
-	//TODO sätt offset relativt julian day!
+	//(*this).offset = (*this).get_offset_from_julian_day((*this).julian_day_number);
 }
 
 //helper
@@ -41,6 +41,14 @@ int Julian::calc_julian_day_number(int year, int month, int day) const {
 	int y = year+4800-a;
 	int m = month+12*a-3;
 	return day + (153*m+2)/5 + 365*y + y/4 - 32045 - 1; //seem to be off by 1
+}
+
+int Julian::get_offset_from_julian_day(int julian_day) const {
+	return julian_day - this->julian_day_on_start_offset();
+}
+
+int Julian::julian_day_on_start_offset() const {
+	return 2399679;
 }
 
 Julian::~Julian() {

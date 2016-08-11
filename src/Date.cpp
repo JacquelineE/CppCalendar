@@ -32,6 +32,10 @@ int Date::getOffset() {
 	return offset;
 }
 
+int Date::getJulian() {
+	return julian_day_number;
+}
+
 //	int Date::offset_protected() {
 //		return offset;
 //	}
@@ -89,17 +93,20 @@ bool Date::operator>=(const Date& ref) {
 
 Date& Date::operator=(const Date& ref) {
 	(*this).offset = ref.offset;
+	(*this).julian_day_number = ref.julian_day_number;
 	if(typeid(*this)!=typeid(ref)) {
 		if(typeid(ref)==typeid(Julian)) {
 			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
 			std::cerr << "lol hello different julian:" << std::endl;
 			//(*this).offset -= diff;
 			(*this).offset += kJulOffsetDiff1858;
+			//TODO store julian_day_number
 		} else {
 			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
 			std::cerr << "lol hello different gregorian:" << std::endl;
 			//(*this).offset += diff;
 			(*this).offset += kJulOffsetDiff1858;
+			//TODO store julian_day_number
 		}
 	}
 	return *this;
