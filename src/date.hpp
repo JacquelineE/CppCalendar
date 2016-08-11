@@ -22,6 +22,7 @@ namespace lab2 {
 	protected:
 		static int monthsLengthNormalYear[12];
 		static std::string monthsName[12];
+		static std::string daysName[7];
 		int kStartYear = 1858;
 		int kUnixStart = 1970;
 		int kJulOffsetDiff1858 = 13;
@@ -49,25 +50,19 @@ namespace lab2 {
 		unsigned int year() const;
 		unsigned int month() const;
 		unsigned int day() const;
+		unsigned int week_day() const;
 		unsigned int days_per_week() const;
 		unsigned int days_this_month() const;
+		std::string week_day_name() const;
 		std::string month_name() const;
 		void add_year (int n = 1);
 		void add_month(int n = 1);
 		void add_day(int n = 1);
-
-	//	virtual unsigned int month() = 0;
-	//	virtual unsigned int day() = 0;
-	//	virtual unsigned int week_day() = 0;
-	//	virtual unsigned int days_per_week() = 0;
-	//	virtual int days_this_month() = 0;
-	//	virtual std::string month_name() = 0;
-	//	virtual void add_year() = 0; //int n =1
-	//	virtual void add_month() = 0; //int n = 1
 		int mod_julian_day() const;
 
 		int getOffset(); //TODO just for testing, remove later
 		int getJulian(); //TODO just for testing, remove later
+
 		int operator-(const Date& ref);
 		bool operator==(const Date& ref);
 		bool operator!=(const Date& ref);
@@ -77,11 +72,10 @@ namespace lab2 {
 		bool operator>=(const Date& ref);
 		virtual Date& operator++() = 0;
 		virtual Date& operator--() = 0;
-		//TODO kollaa om post increment kan va pure virtual
+		//TODO kolla om post increment kan va pure virtual
 		virtual Date& operator+=(const int& n) = 0;
 		virtual Date& operator-=(const int& n) = 0;
 		Date& operator=(const Date& ref);
-		//virtual Date& operator=(const Date& ref) = 0;
 
 	};
 

@@ -77,6 +77,14 @@ int main() {
 	Julian g1857(1857, 12, 31);
 	std::cerr << "MJD 1857:" << g1857.getJulian() << " offset:" << g1857.getOffset() << " date:" << g1857 << std::endl << std::endl;
 
+	std::cerr << "week_day_name:" << gToday.week_day_name() << " week_day:" << gToday.week_day() << " month_name:" << gToday.month_name() << std::endl;
+	gToday -= 3;
+	std::cerr << "week_day_name:" << gToday.week_day_name() << " week_day:" << gToday.week_day() << " month_name:" << gToday.month_name() << std::endl;
+	gToday--;
+	std::cerr << "week_day_name:" << gToday.week_day_name() << " week_day:" << gToday.week_day() << " month_name:" << gToday.month_name() << std::endl;
+	gToday -= 20;
+	std::cerr << gToday << " week_day_name:" << gToday.week_day_name() << " week_day:" << gToday.week_day() << " month_name:" << gToday.month_name() << std::endl << std::endl;
+
 //	//hitta när offset = 0 för julian:
 //	int off = gToday.getOffset();
 //	while(off > 0) {

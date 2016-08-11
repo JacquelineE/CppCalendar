@@ -11,6 +11,17 @@
 namespace lab2 {
 
 class Julian : public Date {
+
+private:
+	virtual int leap_years_before(int year) const;
+	virtual bool is_leap_year(int year) const;
+	virtual void set_offset(long int currTime);
+
+protected:
+	virtual int calc_julian_day_number(int year, int month, int day) const;
+	virtual int get_offset_from_julian_day(int julian_day) const;
+	virtual int julian_day_on_start_offset() const;
+
 public:
 	Julian();
 	Julian(Julian const& ref);
@@ -23,17 +34,9 @@ public:
 	const Julian operator--(int);
 	virtual Julian& operator+=(const int& n);
 	virtual Julian& operator-=(const int& n);
+
 	friend Date& Date::operator=(const Date& ref);
 
-protected:
-	virtual int calc_julian_day_number(int year, int month, int day) const;
-	virtual int get_offset_from_julian_day(int julian_day) const;
-	virtual int julian_day_on_start_offset() const;
-
-private:
-	virtual int leap_years_before(int year) const;
-	virtual bool is_leap_year(int year) const;
-	virtual void set_offset(long int currTime);
 };
 
 }
