@@ -44,8 +44,7 @@ int Date::operator-(const Date& ref) {
 		int diff = leapDaysThis - leapDaysRef;
 		diff = (*this).offset - ref.offset + kJulOffsetDiff1858 + diff;
 	}
-	std::cout << "diff " << typeid(*this).name() << "-" << typeid(ref).name()
-			<< " = " << diff << std::endl;
+	//std::cout << "diff " << typeid(*this).name() << "-" << typeid(ref).name() << " = " << diff << std::endl;
 	return diff;
 }
 
