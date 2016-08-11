@@ -21,6 +21,7 @@ int main() {
 	time(&tp);
 	std::cout << "time is " << tp << std::endl;
 	set_k_time(tp);
+
 //
 //	std::cout << std::endl << "lets build gregorian!" << std::endl;
 //	Date * g = new Gregorian();
@@ -61,6 +62,7 @@ int main() {
 //	std::cout << "*j<=*g: " << (*j<=*g) << std::endl;
 //	std::cout << "j2<=*j: " << (j2<=*j) << "  j2>=*j: " << (j2>=*j) << std::endl;
 //	std::cout << *j << "." << std::endl;
+
 
 
 //	std::cout << j -> year() << j->month() << "day" << j->day() << std::endl;

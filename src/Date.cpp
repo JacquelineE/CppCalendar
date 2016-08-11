@@ -6,6 +6,7 @@
  */
 
 #include "date.hpp"
+#include "julian.hpp"
 #include "kattistime.hpp"
 #include <iostream>
 #include <time.h>
@@ -31,10 +32,22 @@ int Date::getOffset() {
 	return offset;
 }
 
+//	int Date::offset_protected() {
+//		return offset;
+//	}
+
+int Date::get_difference_in_days(const Date& ref, int startYear, int endYear) {
+	//leap days for *this
+	int leapDaysThis = (*this).leap_years_between(startYear, endYear);
+	//leap days for ref
+	int leapDaysRef = ref.leap_years_between(startYear, endYear);
+	return leapDaysThis-leapDaysRef;
+}
+
 //Checks the difference between the actual days
 int Date::operator-(const Date& ref) {
 	int diff;
-	if (typeid(ref) == typeid(*this)) {
+	if(typeid(ref) == typeid(*this)) {
 		diff = (*this).offset - ref.offset;
 	} else {
 		//leap days for *this
@@ -72,6 +85,22 @@ bool Date::operator<=(const Date& ref) {
 
 bool Date::operator>=(const Date& ref) {
 	return ((*this) - ref) >= 0;
+}
+
+Date& Date::operator=(const Date& ref) {
+	(*this).offset = ref.offset;
+	if(typeid(*this)!=typeid(ref)) {
+		if(typeid(ref)==typeid(Julian)) {
+			int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
+			std::cout << "lol hello different julian:" << diff << std::endl;
+			(*this).offset += diff;
+		} else {
+			int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
+			std::cout << "lol hello different gregorian:" << diff << std::endl;
+			(*this).offset -= diff;
+		}
+	}
+	return *this;
 }
 
 //Date& Date::operator++() {
@@ -210,6 +239,8 @@ void Date::add_month(int n) {
 	}
 	offset += startDay;
 }
+
+
 //1 dela me 12 + ta hänsyn till skottår för se antalet år -> anroppa ad year på detta om det e >= 1
 
 //2. gå fram till det datum som gäller (kompensera för att det ev inte e möjligt att komma åt just det datumet om månaden e för kort)

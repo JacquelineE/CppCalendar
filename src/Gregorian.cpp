@@ -11,6 +11,7 @@
 #include <iostream>
 #include <time.h>
 #include <stdlib.h> //abs
+#include <typeinfo> //typeid
 
 namespace lab2 {
 
@@ -25,6 +26,10 @@ Gregorian::Gregorian(Gregorian const& ref) {
 	std::cout << "copy" << std::endl;
 	(*this).offset = ref.offset;
 }
+
+//Gregorian::Gregorian(int year, int month, int day) {
+//
+//}
 
 Gregorian::~Gregorian() {
 
@@ -78,5 +83,14 @@ Gregorian& Gregorian::operator-=(const int& n) {
 	(*this).offset -= n;
     return *this;
 }
+
+//Gregorian& Gregorian::operator=(const Date& ref) {
+//	if(typeid(*this)==typeid(ref)) {
+//		//(*this).offset = ref.offset;
+//	} else {
+//		std::cout << "lala = lalala" << std::endl;
+//	}
+//	return *this;
+//}
 
 }

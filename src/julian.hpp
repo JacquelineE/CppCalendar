@@ -16,12 +16,13 @@ public:
 	Julian(Julian const& ref);
 	~Julian();
 
-	Julian& operator++();
-	Julian& operator--();
+	virtual Julian& operator++(); //kan returna subklass av Date
+	virtual Julian& operator--();
 	const Julian operator++(int);
 	const Julian operator--(int);
-	Julian& operator+=(const int& n);
-	Julian& operator-=(const int& n);
+	virtual Julian& operator+=(const int& n);
+	virtual Julian& operator-=(const int& n);
+	friend Date& Date::operator=(const Date& ref);
 
 private:
 	virtual int leap_years_before(int year) const;

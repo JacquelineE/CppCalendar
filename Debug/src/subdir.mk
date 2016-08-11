@@ -8,28 +8,28 @@ CPP_SRCS += \
 ../src/Gregorian.cpp \
 ../src/Julian.cpp \
 ../src/Kattistime.cpp \
-../src/lab2.cpp 
+../src/main.cpp 
 
 OBJS += \
 ./src/Date.o \
 ./src/Gregorian.o \
 ./src/Julian.o \
 ./src/Kattistime.o \
-./src/lab2.o 
+./src/main.o 
 
 CPP_DEPS += \
 ./src/Date.d \
 ./src/Gregorian.d \
 ./src/Julian.d \
 ./src/Kattistime.d \
-./src/lab2.d 
+./src/main.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
 src/%.o: ../src/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -O0 -g3 -Wall -c -fmessage-length=0 -std=c++11 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

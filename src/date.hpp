@@ -34,6 +34,9 @@ namespace lab2 {
 		int leap_years_between(int startYear, int endYear) const;
 		int days_between(int startYear = 1858, int = 1970) const;
 
+		int get_difference_in_days(const Date& ref, int startYear, int endYear);
+		//int offset_protected();
+
 
 	public:
 		Date();
@@ -58,7 +61,7 @@ namespace lab2 {
 	//	virtual void add_month() = 0; //int n = 1
 	//	virtual int mod_julian_day() = 0;
 
-		int getOffset();
+		int getOffset(); //TODO just for testing, remove later
 		int operator-(const Date& ref);
 		bool operator==(const Date& ref);
 		bool operator!=(const Date& ref);
@@ -66,7 +69,14 @@ namespace lab2 {
 		bool operator>(const Date& ref);
 		bool operator<=(const Date& ref);
 		bool operator>=(const Date& ref);
-		//Date& operator++();
+		virtual Date& operator++() = 0;
+		virtual Date& operator--() = 0;
+		//TODO kollaa om post increment kan va pure virtual
+		virtual Date& operator+=(const int& n) = 0;
+		virtual Date& operator-=(const int& n) = 0;
+		Date& operator=(const Date& ref);
+		//virtual Date& operator=(const Date& ref) = 0;
+
 	};
 
 	std::ostream& operator<<(std::ostream& out, const Date& ref);
