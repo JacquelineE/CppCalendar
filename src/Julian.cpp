@@ -20,20 +20,27 @@ Julian::Julian() {
 	k_time(&mytime);
 	std::cerr << "julian mytime is " << mytime << std::endl;
 	set_offset(mytime);
+	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
 }
 
 Julian::Julian(Julian const& ref) {
 	std::cerr << "copy" << std::endl;
 	(*this).offset = ref.offset;
+	(*this).julian_day_number = ref.julian_day_number;
 }
 
 Julian::Julian(int year, int month, int day) {
+	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
+	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
+	//TODO sätt offset relativt julian day!
+}
+
+//helper
+int Julian::calc_julian_day_number(int year, int month, int day) const {
 	int a = (month > 2) ? 0 : 1;
 	int y = year+4800-a;
 	int m = month+12*a-3;
-	(*this).julian_day_number = day + (153*m+2)/5 + 365*y + y/4 - 32045 - 1; //seem to be off by 1
-	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
-	//TODO sätt offset relativt julian day!
+	return day + (153*m+2)/5 + 365*y + y/4 - 32045 - 1; //seem to be off by 1
 }
 
 Julian::~Julian() {

@@ -25,6 +25,9 @@ public:
 	virtual Julian& operator-=(const int& n);
 	friend Date& Date::operator=(const Date& ref);
 
+protected:
+	virtual int calc_julian_day_number(int year, int month, int day) const;
+
 private:
 	virtual int leap_years_before(int year) const;
 	virtual bool is_leap_year(int year) const;

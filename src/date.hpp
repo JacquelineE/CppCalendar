@@ -38,6 +38,8 @@ namespace lab2 {
 		int get_difference_in_days(const Date& ref, int startYear, int endYear);
 		//int offset_protected();
 
+		virtual int calc_julian_day_number(int year, int month, int day) const = 0;
+
 
 	public:
 		Date();
