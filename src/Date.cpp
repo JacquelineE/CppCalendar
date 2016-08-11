@@ -92,13 +92,15 @@ Date& Date::operator=(const Date& ref) {
 	(*this).offset = ref.offset;
 	if(typeid(*this)!=typeid(ref)) {
 		if(typeid(ref)==typeid(Julian)) {
-			int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
-			std::cout << "lol hello different julian:" << diff << std::endl;
-			(*this).offset += diff;
+			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
+			std::cout << "lol hello different julian:" << std::endl;
+			//(*this).offset -= diff;
+			(*this).offset += kJulOffsetDiff1858;
 		} else {
-			int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
-			std::cout << "lol hello different gregorian:" << diff << std::endl;
-			(*this).offset -= diff;
+			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
+			std::cout << "lol hello different gregorian:" << std::endl;
+			//(*this).offset += diff;
+			(*this).offset += kJulOffsetDiff1858;
 		}
 	}
 	return *this;

@@ -12,6 +12,8 @@
 #include <time.h>
 #include <stdlib.h> //abs
 #include <typeinfo> //typeid
+#include <string> //to_string
+#include <sstream> //str()
 
 namespace lab2 {
 
@@ -28,7 +30,16 @@ Gregorian::Gregorian(Gregorian const& ref) {
 }
 
 //Gregorian::Gregorian(int year, int month, int day) {
-//
+//	//beräkna offset från inmatat datum
+//	std::string y = static_cast<std::ostringstream*>( &(std::ostringstream() << year) )->str();
+//	std::string m = static_cast<std::ostringstream*>( &(std::ostringstream() << month) )->str();
+//	std::string d = static_cast<std::ostringstream*>( &(std::ostringstream() << day) )->str();
+//	std::cout << y << "-" << m << "-" << d << std::endl;
+//	std::string date = (y+"-"+m+"-"+d);
+//	const char *time_details = date.c_str();
+//	struct tm tm;
+//	strptime(time_details, "%H:%M:%S", &tm);
+////	time_t t = mktime(&tm);  // t is now your desired time_t
 //}
 
 Gregorian::~Gregorian() {

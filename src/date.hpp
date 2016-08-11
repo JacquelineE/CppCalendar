@@ -24,7 +24,7 @@ namespace lab2 {
 		static std::string monthsName[12];
 		int kStartYear = 1858;
 		int kUnixStart = 1970;
-		int kJulOffsetDiff1858 = 13;
+		int kJulOffsetDiff1858 = 12;
 		int offset;
 
 		virtual int leap_years_before(int year) const = 0;

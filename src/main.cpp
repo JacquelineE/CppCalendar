@@ -69,6 +69,10 @@ int main() {
 	*g=j2;
 	std::cout << "AFTER: offset j2=" << (j2).getOffset() << std::endl;
 	std::cout << "offset *g=" << (*g).getOffset() << std::endl;
+	std::cout << "j2 " << j2 << "  *g " << *g << std::endl;
+//	std::cout << std::endl << "lets build gregorian again!" << std::endl;
+//	Gregorian(1900, 2, 10);
+
 
 //	std::cout << j -> year() << j->month() << "day" << j->day() << std::endl;
 //	std::cout << "days in month g: " << g-> days_this_month()  << "jul: " << j->days_this_month() << std::endl;

@@ -31,8 +31,6 @@ Julian::~Julian() {
 	// TODO Auto-generated destructor stub
 }
 
-//TODO should count differently since this object only see this method (the
-//other way to count leap years is private... why do we get the same result?)
 int Julian::leap_years_before(int year) const {
 	 year--;
 	 return (year / 4);
