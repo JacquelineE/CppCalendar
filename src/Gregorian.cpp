@@ -40,7 +40,7 @@ int Gregorian::calc_julian_day_number(int year, int month, int day) const {
 	int a = (month > 2) ? 0 : 1;
 	int y = year+4800-a;
 	int m = month+12*a-3;
-	return day + (153*m+2)/5 + 365*y + y/4 - y/100 + y/400 - 32045 - 1; //seem to be off by 1
+	return day + (153*m+2)/5 + 365*y + y/4 - y/100 + y/400 - 32045 - 1; //off by 1
 }
 
 int Gregorian::get_offset_from_julian_day(int julian_day) const {

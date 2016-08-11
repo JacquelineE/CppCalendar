@@ -67,23 +67,23 @@ int main() {
 	std::cerr << "AFTER: offset j2=" << (j2).getOffset() << std::endl;
 	std::cerr << "offset *g=" << (*g).getOffset() << std::endl;
 	std::cerr << "j2 " << j2 << "  *g " << *g << std::endl;
-	Julian gToday2;
-	std::cerr << std::endl << "lets build julian again!" << std::endl;
-	Julian gToday(2016, 8, 11);
-	std::cerr << "MJD today:" << gToday.mod_julian_day() << " offset:" << gToday.getOffset() << std::endl;
-	std::cerr << "MJD today2:" << gToday2.mod_julian_day() << " offset today2:" << gToday2.getOffset() << std::endl;
+	std::cerr << std::endl << "lets build Julian again!" << std::endl;
+	Julian gToday;
+	std::cerr << "MJD today:" << gToday.getJulian() << " offset:" << gToday.getOffset() << " date:" << gToday << std::endl << std::endl;
+	Julian gToday2(2016, 8, 11);
+	std::cerr << "MJD today2:" << gToday2.getJulian() << " offset today2:" << gToday2.getOffset() << " date:" << gToday2 << std::endl << std::endl;
 	Julian g1858(1858, 1, 1);
-	std::cerr << "MJD 1858:" << g1858.mod_julian_day() << " offset:" << g1858.getOffset() << std::endl;
+	std::cerr << "MJD 1858:" << g1858.getJulian() << " offset:" << g1858.getOffset() << " date:" << g1858 <<std::endl << std::endl;
 	Julian g1857(1857, 12, 31);
-	std::cerr << "MJD 1857:" << g1857.mod_julian_day() << " offset:" << g1857.getOffset() << std::endl;
+	std::cerr << "MJD 1857:" << g1857.getJulian() << " offset:" << g1857.getOffset() << " date:" << g1857 << std::endl << std::endl;
 
 //	//hitta när offset = 0 för julian:
-//	int off = gToday2.getOffset();
+//	int off = gToday.getOffset();
 //	while(off > 0) {
-//		--gToday2;
+//		--gToday;
 //		--off;
-//		if(gToday2.getOffset() == 0) {
-//			std::cerr << "offset is 0 on: " << gToday2 << "| julian_day_number:" << gToday2.getJulian() << std::endl;
+//		if(gToday.getOffset() == 0) {
+//			std::cerr << "offset is 0 on: " << gToday << "| julian_day_number:" << gToday.getJulian() << std::endl;
 //		}
 //	}
 
