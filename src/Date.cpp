@@ -213,8 +213,6 @@ void Date::add_year(int n) {
 			std::cout << "ghjl"<< month() << day() ;
 		}
 	}
-
-
 	//add startdays + days in startmonths
 	for(int i = 0; i <month()-1; i++) {
 		daysToAdd += monthsLengthNormalYear[i];
@@ -235,32 +233,79 @@ unsigned int Date::days_this_month() const {
 	return daysInCurrMonth;
 }
 void Date::add_month(int n) {
-	if (n == 0) {
-		return;
-	}
+
+	int daysToAdd = 0;
 	int startDay = day();
-	int nrOfYears = n / 12;
-	add_year(nrOfYears);
-	int nrOfMonthsToAdd = n % 12;
-	int leapYearFactor = 0;
-	if (month() == 2 && is_leap_year(year())) {
-		leapYearFactor = 1;
+	int startMonth = month();
+
+	//add days to get curr offset == 1 jan next month
+	if(!(startMonth == 2 && startDay == 29)) {
+		offset += monthsLengthNormalYear[startMonth-1] -startDay + 1;
 	}
-	offset += monthsLengthNormalYear[month() - 1] - startDay + leapYearFactor;
-	leapYearFactor = 0;
-	int currMonth;
-	for (unsigned int i = month(); i < month() + nrOfMonthsToAdd; ++i) {
-		currMonth = i;
-		if (i > 12) {
-			currMonth = i % 12;
-		}
-		offset += monthsLengthNormalYear[currMonth - 1];
-		if (currMonth == 2 && is_leap_year(year())) {
+	//compensate for feb having one extra day on leap_years
+	if(is_leap_year(year()) && startMonth == 2) {
+		offset++;
+	}
+	//add whole months
+	int index = month();
+	for(int i = 0; i < n-1; i++) {
+		if(is_leap_year(year()) && index == 2) {
 			offset++;
 		}
+		offset += monthsLengthNormalYear[index-1];
+		index++;
+		if(index > 12) {
+			index = index % 12;
+		}
 	}
-	offset += startDay;
+
+
+
+	//minus 1 since we are on 1st jan instead of last day in month
+	if(startDay > monthsLengthNormalYear[month()-1]) {
+		startDay = monthsLengthNormalYear[month()-1];
+		if(is_leap_year(year()) && month() == 2) {
+			startDay++;
+		}
+	}
+	offset += startDay -1;
+
+
 }
+//	if (n == 0) {
+//		return;
+//	}
+//
+//
+//
+//
+//	int startDay = day();
+//	int nrOfYears = n / 12;
+//	//add remaining months on curr year
+//
+//	//if monthToAdd >
+//	add_year(nrOfYears);
+//	int nrOfMonthsToAdd = n - 12 * nrOfYears;
+//	daysToAdd = 0;
+//	int leapYearFactor = 0;
+//	if (month() == 2 && is_leap_year(year())) {
+//		leapYearFactor = 1;
+//	}
+//	offset += monthsLengthNormalYear[month() - 1] - startDay + leapYearFactor;
+//	leapYearFactor = 0;
+//	int currMonth;
+//	for (unsigned int i = month(); i < month() + nrOfMonthsToAdd; ++i) {
+//		currMonth = i;
+//		if (i > 12) {
+//			currMonth = i % 12;
+//		}
+//		offset += monthsLengthNormalYear[currMonth - 1];
+//		if (currMonth == 2 && is_leap_year(year())) {
+//			offset++;
+//		}
+//	}
+//	offset += startDay;
+//}
 
 
 //1 dela me 12 + ta hänsyn till skottår för se antalet år -> anroppa ad year på detta om det e >= 1

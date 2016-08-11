@@ -75,13 +75,13 @@ int main() {
 	cout << *g2 << endl;
 	Gregorian g;
 	Gregorian g3(g);
-	g.add_year(3);
+	g.add_year(2);
 	g.add_month(7);
-	g.add_day(19);
+	g.add_day(20);
 	/////////////////
 	cout << "5y " << g << endl;
-	for(int i = 0; i < 5; i++) {
-		g.add_year(1);
+	for(int i = 0; i < 100; i++) {
+		g.add_month(15);
 		cout << g<< endl;
 	}
 
