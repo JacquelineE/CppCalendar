@@ -72,6 +72,9 @@ int main() {
 //	std::cout << "addYear"  << "new year" << g->year() << std::endl;
 
 	Date * g2 = new Gregorian();
+	Date *j2 = new Julian();
+	cout << "julianska offset" << j2 -> getOffset() << endl;
+	cout << "gregorianska" << g2-> getOffset() << endl;
 	cout << *g2 << endl;
 	Gregorian g;
 	Gregorian g3(g);
@@ -79,11 +82,11 @@ int main() {
 	g.add_month(7);
 	g.add_day(20);
 	/////////////////
-	cout << "5y " << g << endl;
-	for(int i = 0; i < 100; i++) {
-		g.add_month(15);
-		cout << g<< endl;
-	}
+//	cout << "5y " << g << endl;
+//	for(int i = 0; i < 100; i++) {
+//		g.add_month(15);
+//		cout << g<< endl;
+//	}
 
 
 
