@@ -27,6 +27,15 @@ Julian::Julian(Julian const& ref) {
 	(*this).offset = ref.offset;
 }
 
+Julian::Julian(int year, int month, int day) {
+	int a = (month > 2) ? 0 : 1;
+	int y = year+4800-a;
+	int m = month+12*a-3;
+	(*this).julian_day_number = day + (153*m+2)/5 + 365*y + y/4 - 32045 - 1; //seem to be off by 1
+	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
+	//TODO sätt offset relativt julian day!
+}
+
 Julian::~Julian() {
 	// TODO Auto-generated destructor stub
 }

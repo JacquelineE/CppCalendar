@@ -12,8 +12,6 @@
 #include <time.h>
 #include <stdlib.h> //abs
 #include <typeinfo> //typeid
-#include <string> //to_string
-#include <sstream> //str()
 
 namespace lab2 {
 
@@ -29,18 +27,14 @@ Gregorian::Gregorian(Gregorian const& ref) {
 	(*this).offset = ref.offset;
 }
 
-//Gregorian::Gregorian(int year, int month, int day) {
-//	//beräkna offset från inmatat datum
-//	std::string y = static_cast<std::ostringstream*>( &(std::ostringstream() << year) )->str();
-//	std::string m = static_cast<std::ostringstream*>( &(std::ostringstream() << month) )->str();
-//	std::string d = static_cast<std::ostringstream*>( &(std::ostringstream() << day) )->str();
-//	std::cout << y << "-" << m << "-" << d << std::endl;
-//	std::string date = (y+"-"+m+"-"+d);
-//	const char *time_details = date.c_str();
-//	struct tm tm;
-//	strptime(time_details, "%H:%M:%S", &tm);
-////	time_t t = mktime(&tm);  // t is now your desired time_t
-//}
+Gregorian::Gregorian(int year, int month, int day) {
+	int a = (month > 2) ? 0 : 1;
+	int y = year+4800-a;
+	int m = month+12*a-3;
+	(*this).julian_day_number = day + (153*m+2)/5 + 365*y + y/4 - y/100 + y/400 - 32045 - 1; //seem to be off by 1
+	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
+	//TODO sätt offset relativt julian day!
+}
 
 Gregorian::~Gregorian() {
 
@@ -103,5 +97,7 @@ Gregorian& Gregorian::operator-=(const int& n) {
 //	}
 //	return *this;
 //}
+
+//void Gregorian::julian_day_to_gregorian
 
 }

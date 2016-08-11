@@ -272,6 +272,10 @@ void Date::add_month(int n) {
 
 }
 
+int Date::mod_julian_day() const {
+		return (*this).julian_day_number - 2400000;
+}
+
 //just for testing purpose
 void Date::add_day(int n) {
 	offset += n;

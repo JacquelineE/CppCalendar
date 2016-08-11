@@ -18,7 +18,7 @@ protected:
 public:
 	Gregorian();// = default;
 	Gregorian(Gregorian const& ref);
-	//Gregorian(int year, int month, int day);
+	Gregorian(int year, int month, int day);
 	~Gregorian();
 	//int year();
 

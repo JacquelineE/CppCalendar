@@ -26,6 +26,7 @@ namespace lab2 {
 		int kUnixStart = 1970;
 		int kJulOffsetDiff1858 = 12;
 		int offset;
+		int julian_day_number;
 
 		virtual int leap_years_before(int year) const = 0;
 		virtual bool is_leap_year(int year) const = 0;
@@ -59,7 +60,7 @@ namespace lab2 {
 	//	virtual std::string month_name() = 0;
 	//	virtual void add_year() = 0; //int n =1
 	//	virtual void add_month() = 0; //int n = 1
-	//	virtual int mod_julian_day() = 0;
+		int mod_julian_day() const;
 
 		int getOffset(); //TODO just for testing, remove later
 		int operator-(const Date& ref);

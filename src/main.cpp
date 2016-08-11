@@ -65,8 +65,13 @@ int main() {
 	std::cerr << "AFTER: offset j2=" << (j2).getOffset() << std::endl;
 	std::cerr << "offset *g=" << (*g).getOffset() << std::endl;
 	std::cerr << "j2 " << j2 << "  *g " << *g << std::endl;
-//	std::cerr << std::endl << "lets build gregorian again!" << std::endl;
-//	Gregorian(1900, 2, 10);
+	std::cerr << std::endl << "lets build gregorian again!" << std::endl;
+	Gregorian gToday(2016, 8, 11);
+	std::cerr << "MJD today: " << gToday.mod_julian_day() << std::endl;
+	Gregorian g1858(1858, 1, 1);
+	std::cerr << "MJD 1858: " << g1858.mod_julian_day() << std::endl;
+
+
 
 
 //	std::cerr << j -> year() << j->month() << "day" << j->day() << std::endl;

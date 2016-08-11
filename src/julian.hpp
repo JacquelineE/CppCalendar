@@ -14,6 +14,7 @@ class Julian : public Date {
 public:
 	Julian();
 	Julian(Julian const& ref);
+	Julian(int year, int month, int day);
 	~Julian();
 
 	virtual Julian& operator++(); //kan returna subklass av Date
