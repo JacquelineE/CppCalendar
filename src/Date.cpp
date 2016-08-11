@@ -258,9 +258,6 @@ void Date::add_month(int n) {
 			index = index % 12;
 		}
 	}
-
-
-
 	//minus 1 since we are on 1st jan instead of last day in month
 	if(startDay > monthsLengthNormalYear[month()-1]) {
 		startDay = monthsLengthNormalYear[month()-1];
@@ -272,76 +269,6 @@ void Date::add_month(int n) {
 
 
 }
-//	if (n == 0) {
-//		return;
-//	}
-//
-//
-//
-//
-//	int startDay = day();
-//	int nrOfYears = n / 12;
-//	//add remaining months on curr year
-//
-//	//if monthToAdd >
-//	add_year(nrOfYears);
-//	int nrOfMonthsToAdd = n - 12 * nrOfYears;
-//	daysToAdd = 0;
-//	int leapYearFactor = 0;
-//	if (month() == 2 && is_leap_year(year())) {
-//		leapYearFactor = 1;
-//	}
-//	offset += monthsLengthNormalYear[month() - 1] - startDay + leapYearFactor;
-//	leapYearFactor = 0;
-//	int currMonth;
-//	for (unsigned int i = month(); i < month() + nrOfMonthsToAdd; ++i) {
-//		currMonth = i;
-//		if (i > 12) {
-//			currMonth = i % 12;
-//		}
-//		offset += monthsLengthNormalYear[currMonth - 1];
-//		if (currMonth == 2 && is_leap_year(year())) {
-//			offset++;
-//		}
-//	}
-//	offset += startDay;
-//}
-
-
-//1 dela me 12 + ta hänsyn till skottår för se antalet år -> anroppa ad year på detta om det e >= 1
-
-//2. gå fram till det datum som gäller (kompensera för att det ev inte e möjligt att komma åt just det datumet om månaden e för kort)
-
-//3. jobba dig bakåt tills du kommer till den månad du började me, ta me de dagar som tillhör slutet på den månaden
-//
-//	if(n == 0) {
-//		return;
-//	}
-//	int startDay = day();
-//	while(n>1) {
-//		int currMonth = month();
-//		if(currMonth > 12) {
-//			currMonth = currMonth % 12;
-//		}
-//		if(currMonth == 2 && is_leap_year(year())) {
-//			offset += 29;
-//		} else {
-//			offset += std::min(monthsLengthNormalYear[currMonth-1], (monthsLengthNormalYear[currMonth] + monthsLengthNormalYear[currMonth-1] - day()));
-//		}
-//		n--;
-//	}
-//	int currMonth = month();
-//	if(currMonth == 2 && is_leap_year(year())) {
-//		offset += 29 - day(); //remaining days in month
-//	} else {
-//		offset += monthsLengthNormalYear[currMonth-1] - day(); //remaining days in month
-//	}
-//	int nextMonth = currMonth+1;
-//	if(nextMonth >12) {
-//		nextMonth = nextMonth % 12;
-//	}
-//	offset += std::min(startDay, monthsLengthNormalYear[nextMonth-1]); //offset = same day in next month
-//}
 
 //just for testing purpose
 void Date::add_day(int n) {
