@@ -23,11 +23,14 @@ Gregorian::Gregorian() {
 	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
 }
 
-Gregorian::Gregorian(Gregorian const& ref) {
-	std::cerr << "copy" << std::endl;
-	(*this).offset = ref.offset;
-	(*this).julian_day_number = ref.julian_day_number;
-}
+//Gregorian::Gregorian(Gregorian const& ref) {
+//	std::cerr << "copy" << std::endl;
+//	(*this).offset = ref.offset;
+//	(*this).julian_day_number = ref.julian_day_number;
+//}
+Gregorian::Gregorian(const Date & ref) : Date(ref) {}
+
+Gregorian::Gregorian(const Date * ptr) : Date(*ptr) {}
 
 Gregorian::Gregorian(int year, int month, int day) {
 	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
@@ -40,7 +43,7 @@ int Gregorian::calc_julian_day_number(int year, int month, int day) const {
 	int a = (month > 2) ? 0 : 1;
 	int y = year+4800-a;
 	int m = month+12*a-3;
-	return day + (153*m+2)/5 + 365*y + y/4 - y/100 + y/400 - 32045 - 1; //seem to be off by 1
+	return day + (153*m+2)/5 + 365*y + y/4 - y/100 + y/400 - 32045 - 1; //off by 1
 }
 
 int Gregorian::get_offset_from_julian_day(int julian_day) const {
@@ -67,21 +70,21 @@ bool Gregorian::is_leap_year(int year) const {
 }
 
 Gregorian& Gregorian::operator++() {
-	std::cerr << "pre++ " << ((*this).offset) << std::endl;
+	//std::cerr << "pre++ " << ((*this).offset) << std::endl;
 	++(*this).offset;
 	++(*this).julian_day_number;
 	return *this;
 }
 
 Gregorian& Gregorian::operator--() {
-	std::cerr << "pre-- " << ((*this).offset) << std::endl;
+	//std::cerr << "pre-- " << ((*this).offset) << std::endl;
 	--(*this).offset;
 	--(*this).julian_day_number;
 	return *this;
 }
 
 const Gregorian Gregorian::operator++(int) {
-	std::cerr << "post++ " << std::endl;
+	//std::cerr << "post++ " << std::endl;
 	const Gregorian preValue = *this;
 	++(*this).offset;
 	++(*this).julian_day_number;
@@ -89,7 +92,7 @@ const Gregorian Gregorian::operator++(int) {
 }
 
 const Gregorian Gregorian::operator--(int) {
-	std::cerr << "post-- " << std::endl;
+	//std::cerr << "post-- " << std::endl;
 	const Gregorian preValue = *this;
 	--(*this).offset;
 	--(*this).julian_day_number;

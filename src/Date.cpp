@@ -13,6 +13,7 @@
 #include <math.h>       /* ceil */
 #include <algorithm>    // std::max
 #include <typeinfo> //typeid
+#include <sstream>	//stringstream
 
 namespace lab2 {
 
@@ -22,6 +23,17 @@ Date::Date() {
 	//	std::cout << "date mytime is " << mytime << std::endl;
 	//	//monthsLengthNormalYear[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
 	//	set_offset(mytime);
+}
+
+Date::Date(const Date & ref) {
+	std::cerr << "copy date" << std::endl;
+	(*this).julian_day_number = ref.julian_day_number;
+	if(typeid(*this)==typeid(ref)) {
+		(*this).offset = ref.offset;
+	} else {
+		(*this) = ref;
+	}
+
 }
 
 Date::~Date() {
@@ -100,13 +112,11 @@ Date& Date::operator=(const Date& ref) {
 			std::cerr << "lol hello different julian:" << std::endl;
 			//(*this).offset -= diff;
 			(*this).offset += kJulOffsetDiff1858;
-			//TODO store julian_day_number
 		} else {
 			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
 			std::cerr << "lol hello different gregorian:" << std::endl;
 			//(*this).offset += diff;
 			(*this).offset += kJulOffsetDiff1858;
-			//TODO store julian_day_number
 		}
 	}
 	return *this;
@@ -123,6 +133,8 @@ int Date::monthsLengthNormalYear[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
 std::string Date::monthsName[12] = { "January", "February", "March", "April",
 		"May", "June", "July", "August", "September", "October", "November",
 		"December" };
+std::string Date::daysName[7] = {"Monday", "Tuesday", "Wednesday", "Thursday",
+		"Friday", "Saturday", "Sunday"};
 
 void Date::set_offset(long int currTime) {
 	offset = (ceil((double) currTime / (60 * 60 * 24)))
@@ -182,8 +194,29 @@ unsigned int Date::day() const {
 
 }
 
+unsigned int Date::week_day() const {
+	return (((*this).julian_day_number+1) % 7)+1;
+}
+
 unsigned int Date::days_per_week() const {
 	return 7;
+}
+
+unsigned int Date::days_this_month() const {
+	int currMonth = month();
+	int daysInCurrMonth = monthsLengthNormalYear[currMonth - 1];
+	if (currMonth == 2 && is_leap_year(year())) {
+		daysInCurrMonth += 1;
+	}
+	return daysInCurrMonth;
+}
+
+std::string Date::week_day_name() const {
+	return daysName[(((*this).julian_day_number+1) % 7)];
+}
+
+std::string Date::month_name() const {
+	return monthsName[(*this).month()-1];
 }
 
 void Date::add_year(int n) {
@@ -232,15 +265,6 @@ void Date::add_year(int n) {
 
 }
 
-
-unsigned int Date::days_this_month() const {
-	int currMonth = month();
-	int daysInCurrMonth = monthsLengthNormalYear[currMonth - 1];
-	if (currMonth == 2 && is_leap_year(year())) {
-		daysInCurrMonth += 1;
-	}
-	return daysInCurrMonth;
-}
 void Date::add_month(int n) {
 
 	int daysToAdd = 0;
@@ -288,8 +312,14 @@ void Date::add_day(int n) {
 	offset += n;
 }
 
-std::ostream& operator<<(std::ostream& out, const Date& ref) {
-	return out << ref.year() << '-' << ref.month() << "-" << ref.day();
+std::string Date::to_string() const {
+	std::stringstream sstm;
+	sstm << this->year() << "-" << this->month() << "-" << this->day();
+	return sstm.str();
+}
+
+std::ostream& operator<<(std::ostream& out, const Date & ref) {
+	return out << ref.to_string();
 }
 
 }
