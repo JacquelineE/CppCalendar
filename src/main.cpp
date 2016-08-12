@@ -13,10 +13,10 @@
 //#include "date.hpp"
 #include "gregorian.hpp"
 #include "julian.hpp"
-#include "kattistime.hpp"
+#include "kattistime.h"
 //using namespace std;
 using namespace lab2;
-//using namespace std;
+using namespace std;
 int main() {
 
 	////////////////////////////////////////////////////////////
@@ -25,6 +25,13 @@ int main() {
 	time(&mytime);
 	set_k_time(mytime);
 	////////////////////////////////////////////////////////////
+
+	Julian j = Julian(2140,1,31);
+	cout << j << "mod jul day" << j.mod_julian_day()<< endl;
+	j.add_month(2);
+	cout <<"1. "<< j << "mod jul day" << j.mod_julian_day() << endl;
+	j.add_month(-1);
+	cout <<"2. "<< j << "mod jul day" << j.mod_julian_day() << endl;
 
 //
 //	Julian tj;                  // ok: defaultkonstruktor ger dagens datum

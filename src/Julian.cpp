@@ -7,17 +7,18 @@
 
 #include "date.hpp"
 #include "julian.hpp"
-#include "kattistime.hpp"
 #include <iostream>
 #include <time.h>
 #include <stdlib.h> //abs
 #include <typeinfo> //typeid
+#include "kattistime.h"
 
 namespace lab2 {
 
 Julian::Julian() {
-	time_t mytime;
-	k_time(&mytime);
+//	time_t mytime;
+//	k_time(&mytime);
+	time_t mytime = k_time(NULL);
 	std::cerr << "julian mytime is " << mytime << std::endl;
 	set_offset(mytime);
 	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
@@ -91,17 +92,17 @@ Julian& Julian::operator--() {
 	return *this;
 }
 
-const Julian Julian::operator++(int) {
+Julian Julian::operator++(int) {
 	//std::cerr << "post++ " << std::endl;
-	const Julian preValue = *this;
+	Julian preValue = *this;
 	++(*this).offset;
 	++(*this).julian_day_number;
 	return preValue;
 }
 
-const Julian Julian::operator--(int) {
+Julian Julian::operator--(int) {
 	//std::cerr << "post-- " << std::endl;
-	const Julian preValue = *this;
+	Julian preValue = *this;
 	--(*this).offset;
 	--(*this).julian_day_number;
 	return preValue;

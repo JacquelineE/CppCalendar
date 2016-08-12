@@ -9,8 +9,8 @@
  * solving it the wrong way.
  */
 
-#include "kattistime.hpp"
 #include <cassert>
+#include "kattistime.h"
 
 /* Anonymous namespace */
 namespace {

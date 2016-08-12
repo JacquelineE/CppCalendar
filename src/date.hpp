@@ -15,6 +15,10 @@ namespace lab2 {
 
 	//friends
 	private:
+		void decrement_year(int n);
+		void increment_year(int n);
+		void decrement_month(int n);
+		void increment_month(int n);
 
 	//friends and inherits
 	protected:
@@ -63,13 +67,13 @@ namespace lab2 {
 		int getOffset(); //TODO just for testing, remove later
 		int getJulian(); //TODO just for testing, remove later
 
-		int operator-(const Date& ref);
-		bool operator==(const Date& ref);
-		bool operator!=(const Date& ref);
-		bool operator<(const Date& ref);
-		bool operator>(const Date& ref);
-		bool operator<=(const Date& ref);
-		bool operator>=(const Date& ref);
+		int operator-(const Date& ref) const;
+		bool operator==(const Date& ref) const;
+		bool operator!=(const Date& ref) const;
+		bool operator<(const Date& ref) const;
+		bool operator>(const Date& ref) const;
+		bool operator<=(const Date& ref) const;
+		bool operator>=(const Date& ref) const;
 		virtual Date& operator++() = 0;
 		virtual Date& operator--() = 0;
 		//TODO kolla om post increment kan va pure virtual

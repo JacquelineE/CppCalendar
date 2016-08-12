@@ -7,17 +7,18 @@
 
 #include "date.hpp"
 #include "gregorian.hpp"
-#include "kattistime.hpp"
 #include <iostream>
 #include <time.h>
 #include <stdlib.h> //abs
 #include <typeinfo> //typeid
+#include "kattistime.h"
 
 namespace lab2 {
 
 Gregorian::Gregorian() {
-	time_t mytime;
-	k_time(&mytime);
+//	time_t mytime;
+//	k_time(&mytime);
+	time_t mytime = k_time(NULL);
 	std::cerr << "gregorian mytime is " << mytime << std::endl;
 	set_offset(mytime);
 	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
@@ -83,17 +84,17 @@ Gregorian& Gregorian::operator--() {
 	return *this;
 }
 
-const Gregorian Gregorian::operator++(int) {
+Gregorian Gregorian::operator++(int) {
 	//std::cerr << "post++ " << std::endl;
-	const Gregorian preValue = *this;
+	Gregorian preValue = *this;
 	++(*this).offset;
 	++(*this).julian_day_number;
 	return preValue;
 }
 
-const Gregorian Gregorian::operator--(int) {
+Gregorian Gregorian::operator--(int) {
 	//std::cerr << "post-- " << std::endl;
-	const Gregorian preValue = *this;
+	Gregorian preValue = *this;
 	--(*this).offset;
 	--(*this).julian_day_number;
 	return preValue;

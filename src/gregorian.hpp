@@ -32,8 +32,8 @@ public:
 	//therefore they are implemented in subclasses...
 	virtual Gregorian& operator++();
 	virtual Gregorian& operator--();
-	const Gregorian operator++(int);
-	const Gregorian operator--(int);
+	Gregorian operator++(int);
+	Gregorian operator--(int);
 	virtual Gregorian& operator+=(const int& n);
 	virtual Gregorian& operator-=(const int& n);
 

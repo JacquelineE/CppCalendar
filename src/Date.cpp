@@ -7,13 +7,13 @@
 
 #include "date.hpp"
 #include "julian.hpp"
-#include "kattistime.hpp"
 #include <iostream>
 #include <time.h>
 #include <math.h>       /* ceil */
 #include <algorithm>    // std::max
 #include <typeinfo> //typeid
 #include <sstream>	//stringstream
+#include "kattistime.h"
 
 namespace lab2 {
 
@@ -60,47 +60,51 @@ int Date::get_difference_in_days(const Date& ref, int startYear, int endYear) {
 	return leapDaysThis-leapDaysRef;
 }
 
-//Checks the difference between the actual days
-int Date::operator-(const Date& ref) {
-	int diff;
-	if(typeid(ref) == typeid(*this)) {
-		diff = (*this).offset - ref.offset;
-	} else {
-		//leap days for *this
-		int leapDaysThis = leap_years_between(kStartYear, (*this).year());
-		//leap days for ref
-		int leapDaysRef = leap_years_between(kStartYear, ref.year());
-		int diff = leapDaysThis - leapDaysRef;
-		diff = (*this).offset - ref.offset + kJulOffsetDiff1858 + diff;
-	}
-	//std::cout << "diff " << typeid(*this).name() << "-" << typeid(ref).name() << " = " << diff << std::endl;
-	return diff;
-}
+////Checks the difference between the actual days
+//int Date::operator-(const Date& ref) {
+//	int diff;
+//	if(typeid(ref) == typeid(*this)) {
+//		diff = (*this).offset - ref.offset;
+//	} else {
+//		//leap days for *this
+//		int leapDaysThis = leap_years_between(kStartYear, (*this).year());
+//		//leap days for ref
+//		int leapDaysRef = leap_years_between(kStartYear, ref.year());
+//		int diff = leapDaysThis - leapDaysRef;
+//		diff = (*this).offset - ref.offset + kJulOffsetDiff1858 + diff;
+//	}
+//	//std::cout << "diff " << typeid(*this).name() << "-" << typeid(ref).name() << " = " << diff << std::endl;
+//	return diff;
+//}
 
-bool Date::operator==(const Date& ref) {
+bool Date::operator==(const Date& ref) const{
 	return ((*this) - ref) == 0;
 }
 
-bool Date::operator!=(const Date& ref) {
+bool Date::operator!=(const Date& ref) const{
 	return ((*this) - ref) != 0;
 }
 
 //less than
-bool Date::operator<(const Date& ref) {
+bool Date::operator<(const Date& ref) const{
 	return ((*this) - ref) < 0;
 }
 
 //greater than
-bool Date::operator>(const Date& ref) {
+bool Date::operator>(const Date& ref) const{
 	return ((*this) - ref) > 0;
 }
 
-bool Date::operator<=(const Date& ref) {
+bool Date::operator<=(const Date& ref) const{
 	return ((*this) - ref) <= 0;
 }
 
-bool Date::operator>=(const Date& ref) {
+bool Date::operator>=(const Date& ref) const{
 	return ((*this) - ref) >= 0;
+}
+
+int Date::operator-(const Date& date) const {
+  return this->mod_julian_day() - date.mod_julian_day();
 }
 
 Date& Date::operator=(const Date& ref) {
@@ -219,55 +223,104 @@ std::string Date::month_name() const {
 	return monthsName[(*this).month()-1];
 }
 
+void Date::increment_year(int n) {
+	int daysToAdd = 0;
+		if(is_leap_year(year()) && month() <= 2) {
+			//must add extra day
+			daysToAdd++;
+		}
+		//add remaining days on currYear
+		for(unsigned int i = 12; i > month(); --i) {
+			daysToAdd  += monthsLengthNormalYear[i-1];
+		}
+		daysToAdd += (monthsLengthNormalYear[month()-1] - day());
+
+		//add all years in between curr year and last year
+		int i = 1;
+		while(i<n) {
+			if(is_leap_year(year()+i)) {
+				daysToAdd++;
+			}
+			daysToAdd += 365;
+			i++;
+		}
+		//add remaining days on last year
+
+		if(is_leap_year(year()+n)) {
+			if(month() > 2) {
+				daysToAdd++;
+			}
+		} else {
+			if(month() == 2 && day()== 29) {
+				daysToAdd--;
+				std::cerr<< "ghjl"<< month() << day() ;
+			}
+		}
+		//add startdays + days in startmonths
+		for(int i = 0; i <month()-1; i++) {
+			daysToAdd += monthsLengthNormalYear[i];
+		}
+		daysToAdd += day();
+
+		offset += daysToAdd;
+
+}
+
+void Date::decrement_year(int n) {
+	//add past days on last year
+	int daysToSubtract = 0;
+			if(is_leap_year(year())) {
+				if(month() > 2) {
+					daysToSubtract++;
+				}
+			}
+			//add startdays + days in startmonths
+			for(int i = month()-1; i >0; i--) {
+				daysToSubtract+= monthsLengthNormalYear[i-1];
+			}
+			daysToSubtract += day();
+
+		//add all years in between curr year and last year
+		int i = 1;
+		while(i<n) {
+			if(is_leap_year(year()-i)) {
+				daysToSubtract++;
+			}
+			daysToSubtract += 365;
+			i++;
+		}
+
+		if(is_leap_year(year()-n) && month() <= 2) {
+			//must add extra day
+			daysToSubtract++;
+		}
+
+		//add days on the year that will be the new date
+			for(unsigned int i = 12; i > month(); --i) {
+				daysToSubtract  += monthsLengthNormalYear[i-1];
+			}
+			daysToSubtract += (monthsLengthNormalYear[month()-1] - day());
+
+		offset -= daysToSubtract;
+
+}
+
+
+
 void Date::add_year(int n) {
 	if (n == 0) {
 		return;
 	}
-	int daysToAdd = 0;
-	if(is_leap_year(year()) && month() <= 2) {
-		//must add extra day
-		daysToAdd++;
+	if(n<0) {
+		decrement_year(-n);
+	}else {
+		increment_year(n);
 	}
-	//add remaining days on currYear
-	for(unsigned int i = 12; i > month(); --i) {
-		daysToAdd  += monthsLengthNormalYear[i-1];
-	}
-	daysToAdd += (monthsLengthNormalYear[month()-1] - day());
 
-	//add all years in between curr year and last year
-	int i = 1;
-	while(i<n) {
-		if(is_leap_year(year()+i)) {
-			daysToAdd++;
-		}
-		daysToAdd += 365;
-		i++;
-	}
-	//add remaining days on last year
-
-	if(is_leap_year(year()+n)) {
-		if(month() > 2) {
-			daysToAdd++;
-		}
-	} else {
-		if(month() == 2 && day()== 29) {
-			daysToAdd--;
-			std::cout << "ghjl"<< month() << day() ;
-		}
-	}
-	//add startdays + days in startmonths
-	for(int i = 0; i <month()-1; i++) {
-		daysToAdd += monthsLengthNormalYear[i];
-	}
-	daysToAdd += day();
-
-	offset += daysToAdd;
-
+	(*this).julian_day_number = (*this).calc_julian_day_number(year(), month(), day());
 }
 
-void Date::add_month(int n) {
-
-	int daysToAdd = 0;
+void Date::increment_month(int n) {
 	int startDay = day();
 	int startMonth = month();
 
@@ -300,7 +353,39 @@ void Date::add_month(int n) {
 	}
 	offset += startDay -1;
 
+}
 
+void Date::decrement_month(int n) {
+	//TODO baklänges
+	int startDay = day();
+	offset -= day();
+	int i = 0;
+	while(i<n-1) {
+		std::cerr << "decrementing " <<(*this).to_string() << std::endl;
+		if(month() == 2 && is_leap_year(year())) {
+			offset--;
+		}
+		offset -= monthsLengthNormalYear[month()-1];
+		i++;
+	}
+	std::cerr << "soon finish " <<(*this).to_string() << std::endl;
+	int currMonthLength = monthsLengthNormalYear[month()-1];
+	if(month() == 2 && is_leap_year(year())) {
+		currMonthLength++;
+	}
+	offset -= currMonthLength - std::min(startDay, currMonthLength);
+	std::cerr << "finish " <<(*this).to_string() << std::endl;
+}
+
+void Date::add_month(int n) {
+	if(n == 0) {
+		return;
+	} if(n < 0) {
+		decrement_month(-n);
+	} else {
+		increment_month(n);
+	}
+	(*this).julian_day_number = (*this).calc_julian_day_number(year(), month(), day());
 }
 
 int Date::mod_julian_day() const {
@@ -310,6 +395,7 @@ int Date::mod_julian_day() const {
 //just for testing purpose
 void Date::add_day(int n) {
 	offset += n;
+	(*this).julian_day_number = (*this).calc_julian_day_number(year(), month(), day());
 }
 
 std::string Date::to_string() const {

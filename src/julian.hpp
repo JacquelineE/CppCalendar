@@ -33,8 +33,8 @@ public:
 
 	virtual Julian& operator++(); //kan returna subklass av Date
 	virtual Julian& operator--();
-	const Julian operator++(int);
-	const Julian operator--(int);
+	Julian operator++(int);
+	Julian operator--(int);
 	virtual Julian& operator+=(const int& n);
 	virtual Julian& operator-=(const int& n);
 
