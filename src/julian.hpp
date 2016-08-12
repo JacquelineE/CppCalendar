@@ -8,6 +8,8 @@
 #ifndef LAB2_SRC_JULIAN_HPP_
 #define LAB2_SRC_JULIAN_HPP_
 
+#include "date.hpp"
+
 namespace lab2 {
 
 class Julian : public Date {

@@ -16,8 +16,6 @@ namespace lab2 {
 	//friends
 	private:
 
-
-
 	//friends and inherits
 	protected:
 		static int monthsLengthNormalYear[12];
@@ -59,6 +57,7 @@ namespace lab2 {
 		void add_month(int n = 1);
 		void add_day(int n = 1);
 		int mod_julian_day() const;
+		std::string to_string() const;
 
 		int getOffset(); //TODO just for testing, remove later
 		int getJulian(); //TODO just for testing, remove later

@@ -13,6 +13,7 @@
 #include <math.h>       /* ceil */
 #include <algorithm>    // std::max
 #include <typeinfo> //typeid
+#include <sstream>	//stringstream
 
 namespace lab2 {
 
@@ -302,8 +303,14 @@ void Date::add_day(int n) {
 	offset += n;
 }
 
-std::ostream& operator<<(std::ostream& out, const Date& ref) {
-	return out << ref.year() << '-' << ref.month() << "-" << ref.day();
+std::string Date::to_string() const {
+	std::stringstream sstm;
+	sstm << this->year() << "-" << this->month() << "-" << this->day();
+	return sstm.str();
+}
+
+std::ostream& operator<<(std::ostream& out, const Date & ref) {
+	return out << ref.to_string();
 }
 
 }

@@ -8,6 +8,8 @@
 #ifndef LAB2_SRC_GREGORIAN_HPP_
 #define LAB2_SRC_GREGORIAN_HPP_
 
+#include "date.hpp"
+
 namespace lab2 {
 
 class Gregorian : public Date {
