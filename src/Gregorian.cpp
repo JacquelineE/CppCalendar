@@ -23,11 +23,14 @@ Gregorian::Gregorian() {
 	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
 }
 
-Gregorian::Gregorian(Gregorian const& ref) {
-	std::cerr << "copy" << std::endl;
-	(*this).offset = ref.offset;
-	(*this).julian_day_number = ref.julian_day_number;
-}
+//Gregorian::Gregorian(Gregorian const& ref) {
+//	std::cerr << "copy" << std::endl;
+//	(*this).offset = ref.offset;
+//	(*this).julian_day_number = ref.julian_day_number;
+//}
+Gregorian::Gregorian(const Date & ref) : Date(ref) {}
+
+Gregorian::Gregorian(const Date * ptr) : Date(*ptr) {}
 
 Gregorian::Gregorian(int year, int month, int day) {
 	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
@@ -67,21 +70,21 @@ bool Gregorian::is_leap_year(int year) const {
 }
 
 Gregorian& Gregorian::operator++() {
-	std::cerr << "pre++ " << ((*this).offset) << std::endl;
+	//std::cerr << "pre++ " << ((*this).offset) << std::endl;
 	++(*this).offset;
 	++(*this).julian_day_number;
 	return *this;
 }
 
 Gregorian& Gregorian::operator--() {
-	std::cerr << "pre-- " << ((*this).offset) << std::endl;
+	//std::cerr << "pre-- " << ((*this).offset) << std::endl;
 	--(*this).offset;
 	--(*this).julian_day_number;
 	return *this;
 }
 
 const Gregorian Gregorian::operator++(int) {
-	std::cerr << "post++ " << std::endl;
+	//std::cerr << "post++ " << std::endl;
 	const Gregorian preValue = *this;
 	++(*this).offset;
 	++(*this).julian_day_number;
@@ -89,7 +92,7 @@ const Gregorian Gregorian::operator++(int) {
 }
 
 const Gregorian Gregorian::operator--(int) {
-	std::cerr << "post-- " << std::endl;
+	//std::cerr << "post-- " << std::endl;
 	const Gregorian preValue = *this;
 	--(*this).offset;
 	--(*this).julian_day_number;

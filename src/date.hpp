@@ -44,6 +44,7 @@ namespace lab2 {
 
 	public:
 		Date();
+		Date(const Date & ref);
 		virtual ~Date(); // = 0;
 		unsigned int year() const;
 		unsigned int month() const;

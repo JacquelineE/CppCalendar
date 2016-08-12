@@ -26,7 +26,8 @@ protected:
 
 public:
 	Julian();
-	Julian(Julian const& ref);
+	Julian(const Date & ref);
+	Julian(const Date * ptr);
 	Julian(int year, int month, int day);
 	~Julian();
 

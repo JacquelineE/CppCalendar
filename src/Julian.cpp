@@ -23,11 +23,17 @@ Julian::Julian() {
 	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
 }
 
-Julian::Julian(Julian const& ref) {
-	std::cerr << "copy" << std::endl;
-	(*this).offset = ref.offset;
-	(*this).julian_day_number = ref.julian_day_number;
-}
+//Julian::Julian(Julian const& ref) {
+//	std::cerr << "copy" << std::endl;
+//	(*this).offset = ref.offset;
+//	(*this).julian_day_number = ref.julian_day_number;
+//}
+
+Julian::Julian(const Date & ref) : Date(ref) {}
+
+Julian::Julian(const Date * ptr) : Date(*ptr) {}
+
+
 
 Julian::Julian(int year, int month, int day) {
 	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
@@ -72,21 +78,21 @@ void Julian::set_offset(long int currTime) {
 }
 
 Julian& Julian::operator++() {
-	std::cerr << "pre++ " << ((*this).offset) << std::endl;
+	//std::cerr << "pre++ " << ((*this).offset) << std::endl;
 	++(*this).offset;
 	++(*this).julian_day_number;
 	return *this;
 }
 
 Julian& Julian::operator--() {
-	std::cerr << "pre-- " << ((*this).offset) << std::endl;
+	//std::cerr << "pre-- " << ((*this).offset) << std::endl;
 	--(*this).offset;
 	--(*this).julian_day_number;
 	return *this;
 }
 
 const Julian Julian::operator++(int) {
-	std::cerr << "post++ " << std::endl;
+	//std::cerr << "post++ " << std::endl;
 	const Julian preValue = *this;
 	++(*this).offset;
 	++(*this).julian_day_number;
@@ -94,7 +100,7 @@ const Julian Julian::operator++(int) {
 }
 
 const Julian Julian::operator--(int) {
-	std::cerr << "post-- " << std::endl;
+	//std::cerr << "post-- " << std::endl;
 	const Julian preValue = *this;
 	--(*this).offset;
 	--(*this).julian_day_number;

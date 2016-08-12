@@ -23,7 +23,8 @@ protected:
 
 public:
 	Gregorian();// = default;
-	Gregorian(Gregorian const& ref);
+	Gregorian(const Date & ref);
+	Gregorian(const Date * ptr);
 	Gregorian(int year, int month, int day);
 	~Gregorian();
 
