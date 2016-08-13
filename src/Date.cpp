@@ -26,8 +26,9 @@ Date::Date() {
 }
 
 Date::Date(const Date & ref) {
-	std::cerr << "copy date" << std::endl;
+	std::cerr << "copy date " << std::endl;
 	(*this).julian_day_number = ref.julian_day_number;
+	std::cerr << "this: " << typeid(*this).name() << " ref: " << typeid(ref).name() << std::endl;
 	if(typeid(*this)==typeid(ref)) {
 		(*this).offset = ref.offset;
 	} else {
@@ -58,6 +59,26 @@ int Date::get_difference_in_days(const Date& ref, int startYear, int endYear) {
 	//leap days for ref
 	int leapDaysRef = ref.leap_years_between(startYear, endYear);
 	return leapDaysThis-leapDaysRef;
+}
+
+int Date::correct_day_number(int year, int month) const {
+	if(month==2) {
+		if(is_leap_year(year)) {
+			return 29;
+		} else {
+			return 28;
+		}
+	}
+	else if(month < 8) {
+		if(month % 2 == 0) {
+			return 30;
+		}
+	} else {
+		if(month % 2 == 1) {
+			return 30;
+		}
+	}
+	return 31;
 }
 
 ////Checks the difference between the actual days
@@ -112,15 +133,21 @@ Date& Date::operator=(const Date& ref) {
 	(*this).julian_day_number = ref.julian_day_number;
 	if(typeid(*this)!=typeid(ref)) {
 		if(typeid(ref)==typeid(Julian)) {
+//			(*this).get_offset_from_julian_day((*this).julian_day_number);
+
 			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
 			std::cerr << "lol hello different julian:" << std::endl;
 			//(*this).offset -= diff;
 			(*this).offset += kJulOffsetDiff1858;
+//			(*this).offset -= (get_difference_in_days(ref, kStartYear, ref.year()));
 		} else {
+//			(*this).get_offset_from_julian_day((*this).julian_day_number);
+
 			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
 			std::cerr << "lol hello different gregorian:" << std::endl;
 			//(*this).offset += diff;
-			(*this).offset += kJulOffsetDiff1858;
+			(*this).offset -= kJulOffsetDiff1858;
+//			(*this).offset += ((*this).get_difference_in_days(ref, kStartYear, ref.year()));
 		}
 	}
 	return *this;
@@ -141,7 +168,7 @@ std::string Date::daysName[7] = {"Monday", "Tuesday", "Wednesday", "Thursday",
 		"Friday", "Saturday", "Sunday"};
 
 void Date::set_offset(long int currTime) {
-	offset = (ceil((double) currTime / (60 * 60 * 24)))
+	offset = (floor((double) currTime / (60 * 60 * 24))) //TODO ceil
 			+ days_between(kStartYear, kUnixStart);
 	std::cerr << "in set_offset " << offset << std::endl;
 }

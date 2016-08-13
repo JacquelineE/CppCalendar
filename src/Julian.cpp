@@ -11,6 +11,7 @@
 #include <time.h>
 #include <stdlib.h> //abs
 #include <typeinfo> //typeid
+#include <stdexcept>//invalid_argument
 #include "kattistime.h"
 
 namespace lab2 {
@@ -37,9 +38,24 @@ Julian::Julian(const Date * ptr) : Date(*ptr) {}
 
 
 Julian::Julian(int year, int month, int day) {
+	is_valid_date(year, month, day);
 	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
 	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
 	(*this).offset = (*this).get_offset_from_julian_day((*this).julian_day_number);
+}
+
+void Julian::is_valid_date(int year, int month, int day) const {
+	std::cerr << "is_valid_date month : " << month << std::endl;
+	if((month > 12) || (month < 1)) {
+		std::cerr << "ERROR MONTH" << std::endl;
+		throw std::invalid_argument( "month must be between 1-12" );
+		return;
+	}
+	else if(day > correct_day_number(year, month) || day < 1) {
+		std::cerr << "ERROR DAY tru " << correct_day_number(year, month) << std::endl;
+		throw std::invalid_argument( "this month does not have this number of days" );
+		return;
+	}
 }
 
 //helper

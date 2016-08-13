@@ -20,6 +20,7 @@ protected:
 	virtual int calc_julian_day_number(int year, int month, int day) const;
 	virtual int get_offset_from_julian_day(int julian_day) const;
 	virtual int julian_day_on_start_offset() const;
+	virtual void is_valid_date(int year, int month, int day) const;
 
 public:
 	Gregorian();// = default;

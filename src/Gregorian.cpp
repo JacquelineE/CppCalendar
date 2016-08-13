@@ -11,6 +11,7 @@
 #include <time.h>
 #include <stdlib.h> //abs
 #include <typeinfo> //typeid
+#include <stdexcept>//invalid_argument
 #include "kattistime.h"
 
 namespace lab2 {
@@ -21,6 +22,7 @@ Gregorian::Gregorian() {
 	time_t mytime = k_time(NULL);
 	std::cerr << "gregorian mytime is " << mytime << std::endl;
 	set_offset(mytime);
+	offset++;
 	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
 }
 
@@ -34,9 +36,23 @@ Gregorian::Gregorian(const Date & ref) : Date(ref) {}
 Gregorian::Gregorian(const Date * ptr) : Date(*ptr) {}
 
 Gregorian::Gregorian(int year, int month, int day) {
+	is_valid_date(year, month, day);
 	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
 	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
 	(*this).offset = (*this).get_offset_from_julian_day((*this).julian_day_number);
+}
+
+void Gregorian::is_valid_date(int year, int month, int day) const {
+	if((month > 12) || (month < 1)) {
+		std::cerr << "ERROR MONTH" << std::endl;
+		throw std::invalid_argument( "month must be between 1-12" );
+		return;
+	}
+	else if(day > correct_day_number(year, month) || day < 1) {
+		std::cerr << "ERROR DAY tru " << correct_day_number(year, month) << std::endl;
+		throw std::invalid_argument( "this month does not have this number of days" );
+		return;
+	}
 }
 
 //helper
@@ -44,7 +60,7 @@ int Gregorian::calc_julian_day_number(int year, int month, int day) const {
 	int a = (month > 2) ? 0 : 1;
 	int y = year+4800-a;
 	int m = month+12*a-3;
-	return day + (153*m+2)/5 + 365*y + y/4 - y/100 + y/400 - 32045 - 1; //off by 1
+	return day + (153*m+2)/5 + 365*y + y/4 - y/100 + y/400 - 32045 -1; //off by 1
 }
 
 int Gregorian::get_offset_from_julian_day(int julian_day) const {

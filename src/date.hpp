@@ -27,12 +27,13 @@ namespace lab2 {
 		static std::string daysName[7];
 		int kStartYear = 1858;
 		int kUnixStart = 1970;
-		int kJulOffsetDiff1858 = 13;
+		int kJulOffsetDiff1858 = 12; //13
 		int offset;
 		int julian_day_number;
 
 		virtual int leap_years_before(int year) const = 0;
 		virtual bool is_leap_year(int year) const = 0;
+		int correct_day_number(int year, int month) const;
 
 		virtual void set_offset(long int currTime);
 		int leap_years_between(int startYear, int endYear) const;
@@ -42,7 +43,7 @@ namespace lab2 {
 		//int offset_protected();
 
 		virtual int calc_julian_day_number(int year, int month, int day) const = 0;
-		//virtual int get_offset_from_julian_day(int julian_day) const = 0;
+		virtual int get_offset_from_julian_day(int julian_day) const = 0;
 		virtual int julian_day_on_start_offset() const = 0;
 
 
@@ -84,6 +85,17 @@ namespace lab2 {
 	};
 
 	std::ostream& operator<<(std::ostream& out, const Date& ref);
+
+	struct YearMonthDay {
+		int y;
+		int m;
+		int d;
+		YearMonthDay(int year, int month, int day) {
+			y = year;
+			m = month;
+			d = day;
+		}
+	};
 
 }
 
