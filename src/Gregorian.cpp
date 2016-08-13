@@ -21,8 +21,7 @@ Gregorian::Gregorian() {
 //	k_time(&mytime);
 	time_t mytime = k_time(NULL);
 	std::cerr << "gregorian mytime is " << mytime << std::endl;
-	set_offset(mytime);
-	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
+	this->julian_day_number = get_julian_number_from_time(mytime);
 }
 
 //Gregorian::Gregorian(Gregorian const& ref) {
@@ -38,9 +37,8 @@ Gregorian::Gregorian(int year, int month, int day) {
 	is_valid_date(year, month, day);
 	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
 	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
-	(*this).offset = (*this).get_offset_from_julian_day((*this).julian_day_number);
 	std::cerr << "JD FROM JDN:" << (*this).julian_day_number << std::endl;
-	std::cerr << "OFFSET FROM JDN:" << (*this).offset << std::endl;
+	std::cerr << "OFFSET FROM JDN:" << (*this).get_offset_from_julian_day(julian_day_number) << std::endl;
 }
 
 void Gregorian::is_valid_date(int year, int month, int day) const {
@@ -88,15 +86,11 @@ bool Gregorian::is_leap_year(int year) const {
 }
 
 Gregorian& Gregorian::operator++() {
-	//std::cerr << "pre++ " << ((*this).offset) << std::endl;
-	++(*this).offset;
 	++(*this).julian_day_number;
 	return *this;
 }
 
 Gregorian& Gregorian::operator--() {
-	//std::cerr << "pre-- " << ((*this).offset) << std::endl;
-	--(*this).offset;
 	--(*this).julian_day_number;
 	return *this;
 }
@@ -104,7 +98,6 @@ Gregorian& Gregorian::operator--() {
 Gregorian Gregorian::operator++(int) {
 	//std::cerr << "post++ " << std::endl;
 	Gregorian preValue = *this;
-	++(*this).offset;
 	++(*this).julian_day_number;
 	return preValue;
 }
@@ -112,21 +105,18 @@ Gregorian Gregorian::operator++(int) {
 Gregorian Gregorian::operator--(int) {
 	//std::cerr << "post-- " << std::endl;
 	Gregorian preValue = *this;
-	--(*this).offset;
 	--(*this).julian_day_number;
 	return preValue;
 }
 
 Gregorian& Gregorian::operator+=(const int& n) {
 	std::cerr << "+= " << std::endl;
-	(*this).offset += n;
 	(*this).julian_day_number += n;
     return *this;
 }
 
 Gregorian& Gregorian::operator-=(const int& n) {
 	std::cerr << "-= " << std::endl;
-	(*this).offset -= n;
 	(*this).julian_day_number -= n;
     return *this;
 }

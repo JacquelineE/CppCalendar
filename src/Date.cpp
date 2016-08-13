@@ -29,20 +29,24 @@ Date::Date(const Date & ref) {
 	std::cerr << "copy date " << std::endl;
 	(*this).julian_day_number = ref.julian_day_number;
 	std::cerr << "this: " << typeid(*this).name() << " ref: " << typeid(ref).name() << std::endl;
-	if(typeid(*this)==typeid(ref)) {
-		(*this).offset = ref.offset;
-	} else {
-		(*this) = ref;
-	}
-
 }
 
 Date::~Date() {
 	//	//delete [] monthsLengthNormalYear
 }
 
+int Date::get_julian_number_from_time(long int currTime) const {
+	int julianNumberStart = 2440587;
+	int numberOfDays = (floor((double) currTime / (60 * 60 * 24)));
+	if(numberOfDays > 0) {
+		return julianNumberStart + numberOfDays;
+	} else {
+		return julianNumberStart - numberOfDays;
+	}
+}
+
 int Date::getOffset() {
-	return offset;
+	return get_offset_from_julian_day((*this).julian_day_number);
 }
 
 int Date::getJulian() {
@@ -129,27 +133,7 @@ int Date::operator-(const Date& date) const {
 }
 
 Date& Date::operator=(const Date& ref) {
-	(*this).offset = ref.offset;
 	(*this).julian_day_number = ref.julian_day_number;
-	if(typeid(*this)!=typeid(ref)) {
-		if(typeid(ref)==typeid(Julian)) {
-//			(*this).get_offset_from_julian_day((*this).julian_day_number);
-
-			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
-			std::cerr << "lol hello different julian:" << std::endl;
-			//(*this).offset -= diff;
-			(*this).offset += kJulOffsetDiff1858;
-//			(*this).offset -= (get_difference_in_days(ref, kStartYear, ref.year()));
-		} else {
-//			(*this).get_offset_from_julian_day((*this).julian_day_number);
-
-			//int diff = (*this).get_difference_in_days(ref, kStartYear, ref.year());
-			std::cerr << "lol hello different gregorian:" << std::endl;
-			//(*this).offset += diff;
-			(*this).offset -= kJulOffsetDiff1858;
-//			(*this).offset += ((*this).get_difference_in_days(ref, kStartYear, ref.year()));
-		}
-	}
 	return *this;
 }
 
@@ -167,13 +151,6 @@ std::string Date::monthsName[12] = { "January", "February", "March", "April",
 std::string Date::daysName[7] = {"Monday", "Tuesday", "Wednesday", "Thursday",
 		"Friday", "Saturday", "Sunday"};
 
-void Date::set_offset(long int currTime) {
-	std::cerr << "off1:" << (ceil((double) currTime / (60 * 60 * 24))) - 1 << " off2:" << days_between(kStartYear, kUnixStart) << std::endl;
-	offset = (ceil((double) currTime / (60 * 60 * 24))) //TODO ceil
-			+ days_between(kStartYear, kUnixStart);
-	std::cerr << "in set_offset " << offset << std::endl;
-}
-
 // Returns number of leap years, exclusive endYear
 int Date::leap_years_between(int startYear, int endYear) const {
 	return leap_years_before(endYear) - leap_years_before(startYear + 1);
@@ -185,8 +162,8 @@ int Date::days_between(int startYear, int endYear) const {
 }
 
 unsigned int Date::year() const {
-	int tentative_years = offset / 365;
-	int remainingDays = offset % 365;
+	int tentative_years = (*this).get_offset_from_julian_day((*this).julian_day_number) / 365;
+	int remainingDays = (*this).get_offset_from_julian_day((*this).julian_day_number) % 365;
 	if (leap_years_between(kStartYear, kStartYear + tentative_years)
 			>= remainingDays) {
 		tentative_years--;
@@ -196,7 +173,8 @@ unsigned int Date::year() const {
 
 unsigned int Date::month() const {
 	int currYear = year();
-	int daysOffsetCurrYear = offset - days_between(kStartYear, currYear);
+	int daysOffsetCurrYear = (*this).get_offset_from_julian_day((*this).julian_day_number)
+			- days_between(kStartYear, currYear);
 	//std::cout << "dayOffset" << daysOffsetCurrYear << std::endl;
 	bool isLeapYear = is_leap_year(currYear);
 	unsigned int index = 0;
@@ -213,7 +191,7 @@ unsigned int Date::month() const {
 unsigned int Date::day() const {
 	unsigned int currYear = year();
 	unsigned int currMonth = month();
-	unsigned int daysOffsetCurrYear = offset
+	unsigned int daysOffsetCurrYear = (*this).get_offset_from_julian_day((*this).julian_day_number)
 			- days_between(kStartYear, currYear);
 	unsigned int daysToStartOfMonth = 0;
 	for (unsigned int i = 0; i < currMonth - 1; i++) {
@@ -290,7 +268,7 @@ void Date::increment_year(int n) {
 		}
 		daysToAdd += day();
 
-		offset += daysToAdd;
+		julian_day_number += daysToAdd;
 
 }
 
@@ -329,7 +307,7 @@ void Date::decrement_year(int n) {
 			}
 			daysToSubtract += (monthsLengthNormalYear[month()-1] - day());
 
-		offset -= daysToSubtract;
+		julian_day_number -= daysToSubtract; //TODO or remove these?
 
 }
 
@@ -345,7 +323,7 @@ void Date::add_year(int n) {
 		increment_year(n);
 	}
 
-	(*this).julian_day_number = (*this).calc_julian_day_number(year(), month(), day());
+	(*this).julian_day_number = (*this).calc_julian_day_number(year(), month(), day()); //TODO e denna rad nödvändig nu?
 }
 
 void Date::increment_month(int n) {
@@ -354,19 +332,19 @@ void Date::increment_month(int n) {
 
 	//add days to get curr offset == 1 jan next month
 	if(!(startMonth == 2 && startDay == 29)) {
-		offset += monthsLengthNormalYear[startMonth-1] -startDay + 1;
+		julian_day_number += monthsLengthNormalYear[startMonth-1] -startDay + 1;
 	}
 	//compensate for feb having one extra day on leap_years
 	if(is_leap_year(year()) && startMonth == 2) {
-		offset++;
+		julian_day_number++;
 	}
 	//add whole months
 	int index = month();
 	for(int i = 0; i < n-1; i++) {
 		if(is_leap_year(year()) && index == 2) {
-			offset++;
+			julian_day_number++;
 		}
-		offset += monthsLengthNormalYear[index-1];
+		julian_day_number += monthsLengthNormalYear[index-1];
 		index++;
 		if(index > 12) {
 			index = index % 12;
@@ -379,21 +357,21 @@ void Date::increment_month(int n) {
 			startDay++;
 		}
 	}
-	offset += startDay -1;
+	julian_day_number += startDay -1;
 
 }
 
 void Date::decrement_month(int n) {
 	//TODO baklänges
 	int startDay = day();
-	offset -= day();
+	julian_day_number -= day();
 	int i = 0;
 	while(i<n-1) {
 		std::cerr << "decrementing " <<(*this).to_string() << std::endl;
 		if(month() == 2 && is_leap_year(year())) {
-			offset--;
+			julian_day_number--;
 		}
-		offset -= monthsLengthNormalYear[month()-1];
+		julian_day_number -= monthsLengthNormalYear[month()-1];
 		i++;
 	}
 	std::cerr << "soon finish " <<(*this).to_string() << std::endl;
@@ -401,7 +379,7 @@ void Date::decrement_month(int n) {
 	if(month() == 2 && is_leap_year(year())) {
 		currMonthLength++;
 	}
-	offset -= currMonthLength - std::min(startDay, currMonthLength);
+	julian_day_number -= currMonthLength - std::min(startDay, currMonthLength);
 	std::cerr << "finish " <<(*this).to_string() << std::endl;
 }
 
@@ -422,8 +400,8 @@ int Date::mod_julian_day() const {
 
 //just for testing purpose
 void Date::add_day(int n) {
-	offset += n;
-	(*this).julian_day_number = (*this).calc_julian_day_number(year(), month(), day());
+	julian_day_number += n;
+	//(*this).julian_day_number = (*this).calc_julian_day_number(year(), month(), day());
 }
 
 std::string Date::to_string() const {

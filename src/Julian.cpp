@@ -26,17 +26,7 @@ Julian::Julian() {
 //	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
 
 	this->julian_day_number = get_julian_number_from_time(mytime);
-	this->offset = get_offset_from_julian_day((*this).julian_day_number);
-}
-
-int Julian::get_julian_number_from_time(long int currTime) const {
-	int julianNumberStart = 2440587;
-	int numberOfDays = (floor((double) currTime / (60 * 60 * 24)));
-	if(numberOfDays > 0) {
-		return julianNumberStart + numberOfDays;
-	} else {
-		return julianNumberStart - numberOfDays;
-	}
+	//this->offset = get_offset_from_julian_day((*this).julian_day_number);
 }
 
 //Julian::Julian(Julian const& ref) {
@@ -55,8 +45,7 @@ Julian::Julian(int year, int month, int day) {
 	is_valid_date(year, month, day);
 	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
 	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
-	(*this).offset = (*this).get_offset_from_julian_day((*this).julian_day_number);
-	std::cerr << "FROM JDN:" << (*this).offset << std::endl;
+	std::cerr << "FROM JDN:" << get_offset_from_julian_day(julian_day_number) << std::endl;
 }
 
 void Julian::is_valid_date(int year, int month, int day) const {
@@ -103,22 +92,13 @@ bool Julian::is_leap_year(int year) const {
 	 return (year % 4 == 0);
 }
 
-void Julian::set_offset(long int currTime) {
-	(*this).Date::set_offset(currTime);
-	offset -= kJulOffsetDiff1858;
-	std::cerr << "in set_offset jul " << offset << std::endl;
-}
 
 Julian& Julian::operator++() {
-	//std::cerr << "pre++ " << ((*this).offset) << std::endl;
-	++(*this).offset;
 	++(*this).julian_day_number;
 	return *this;
 }
 
 Julian& Julian::operator--() {
-	//std::cerr << "pre-- " << ((*this).offset) << std::endl;
-	--(*this).offset;
 	--(*this).julian_day_number;
 	return *this;
 }
@@ -126,7 +106,6 @@ Julian& Julian::operator--() {
 Julian Julian::operator++(int) {
 	//std::cerr << "post++ " << std::endl;
 	Julian preValue = *this;
-	++(*this).offset;
 	++(*this).julian_day_number;
 	return preValue;
 }
@@ -134,7 +113,6 @@ Julian Julian::operator++(int) {
 Julian Julian::operator--(int) {
 	//std::cerr << "post-- " << std::endl;
 	Julian preValue = *this;
-	--(*this).offset;
 	--(*this).julian_day_number;
 	return preValue;
 }
@@ -142,7 +120,6 @@ Julian Julian::operator--(int) {
 Julian& Julian::operator+=(const int& n) {
     /* addition of rhs to *this takes place here */
 	std::cerr << "+= " << std::endl;
-	(*this).offset += n;
 	(*this).julian_day_number += n;
     return *this; // return the result by reference
 }
@@ -150,7 +127,6 @@ Julian& Julian::operator+=(const int& n) {
 Julian& Julian::operator-=(const int& n) {
     /* addition of rhs to *this takes place here */
 	std::cerr << "-= " << std::endl;
-	(*this).offset -= n;
 	(*this).julian_day_number -= n;
     return *this; // return the result by reference
 }
