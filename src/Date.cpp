@@ -168,7 +168,8 @@ std::string Date::daysName[7] = {"Monday", "Tuesday", "Wednesday", "Thursday",
 		"Friday", "Saturday", "Sunday"};
 
 void Date::set_offset(long int currTime) {
-	offset = (floor((double) currTime / (60 * 60 * 24))) //TODO ceil
+	std::cerr << "off1:" << (ceil((double) currTime / (60 * 60 * 24))) - 1 << " off2:" << days_between(kStartYear, kUnixStart) << std::endl;
+	offset = (ceil((double) currTime / (60 * 60 * 24))) //TODO ceil
 			+ days_between(kStartYear, kUnixStart);
 	std::cerr << "in set_offset " << offset << std::endl;
 }

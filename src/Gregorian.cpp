@@ -22,7 +22,6 @@ Gregorian::Gregorian() {
 	time_t mytime = k_time(NULL);
 	std::cerr << "gregorian mytime is " << mytime << std::endl;
 	set_offset(mytime);
-	offset++;
 	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
 }
 
@@ -40,6 +39,8 @@ Gregorian::Gregorian(int year, int month, int day) {
 	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
 	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
 	(*this).offset = (*this).get_offset_from_julian_day((*this).julian_day_number);
+	std::cerr << "JD FROM JDN:" << (*this).julian_day_number << std::endl;
+	std::cerr << "OFFSET FROM JDN:" << (*this).offset << std::endl;
 }
 
 void Gregorian::is_valid_date(int year, int month, int day) const {
@@ -68,7 +69,7 @@ int Gregorian::get_offset_from_julian_day(int julian_day) const {
 }
 
 int Gregorian::julian_day_on_start_offset() const {
-	return 2399679;
+	return 2399679; //1857-12-31
 }
 
 Gregorian::~Gregorian() {

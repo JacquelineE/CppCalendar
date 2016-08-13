@@ -24,6 +24,7 @@ protected:
 	virtual int get_offset_from_julian_day(int julian_day) const;
 	virtual int julian_day_on_start_offset() const;
 	virtual void is_valid_date(int year, int month, int day) const;
+	int get_julian_number_from_time(long int currTime) const; //TA TILL DATE? TODO
 
 public:
 	Julian();

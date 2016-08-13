@@ -12,6 +12,7 @@
 #include <stdlib.h> //abs
 #include <typeinfo> //typeid
 #include <stdexcept>//invalid_argument
+#include <math.h>       /* ceil */
 #include "kattistime.h"
 
 namespace lab2 {
@@ -21,8 +22,21 @@ Julian::Julian() {
 //	k_time(&mytime);
 	time_t mytime = k_time(NULL);
 	std::cerr << "julian mytime is " << mytime << std::endl;
-	set_offset(mytime);
-	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
+//	set_offset(mytime);
+//	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
+
+	this->julian_day_number = get_julian_number_from_time(mytime);
+	this->offset = get_offset_from_julian_day((*this).julian_day_number);
+}
+
+int Julian::get_julian_number_from_time(long int currTime) const {
+	int julianNumberStart = 2440587;
+	int numberOfDays = (floor((double) currTime / (60 * 60 * 24)));
+	if(numberOfDays > 0) {
+		return julianNumberStart + numberOfDays;
+	} else {
+		return julianNumberStart - numberOfDays;
+	}
 }
 
 //Julian::Julian(Julian const& ref) {
@@ -42,6 +56,7 @@ Julian::Julian(int year, int month, int day) {
 	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
 	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
 	(*this).offset = (*this).get_offset_from_julian_day((*this).julian_day_number);
+	std::cerr << "FROM JDN:" << (*this).offset << std::endl;
 }
 
 void Julian::is_valid_date(int year, int month, int day) const {
@@ -72,7 +87,7 @@ int Julian::get_offset_from_julian_day(int julian_day) const {
 }
 
 int Julian::julian_day_on_start_offset() const {
-	return 2399691; //JDN when offset=0, dvs julianskt datum 1857-12-31??
+	return 2399691; //JDN when offset=0, dvs julianskt datum 1857-12-31
 }
 
 Julian::~Julian() {
@@ -89,7 +104,7 @@ bool Julian::is_leap_year(int year) const {
 }
 
 void Julian::set_offset(long int currTime) {
-	Date::set_offset(currTime);
+	(*this).Date::set_offset(currTime);
 	offset -= kJulOffsetDiff1858;
 	std::cerr << "in set_offset jul " << offset << std::endl;
 }

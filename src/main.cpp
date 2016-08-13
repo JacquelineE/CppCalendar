@@ -34,6 +34,11 @@ int main() {
 //	j.add_month(-1);
 //	cout <<"2. "<< j << "mod jul day" << j.mod_julian_day() << endl;
 
+	Julian today;
+	cerr << today.getOffset() << endl << today << endl << today.mod_julian_day() << " J:" << today.getJulian() <<endl << endl;
+	Julian today2(2034, 7, 26);
+	cerr << today2 << endl << today2.mod_julian_day() << endl << "OK"<< endl <<endl;
+
 	Julian j1(2034, 7, 26);
 	cerr << j1.mod_julian_day() << " j1:" << j1 << endl << endl;
 
