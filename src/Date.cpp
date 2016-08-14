@@ -22,7 +22,6 @@ Date::Date() { }
 Date::Date(const Date & ref) {
 	std::cerr << "copy date " << std::endl;
 	(*this).julian_day_number = ref.julian_day_number;
-	std::cerr << "this: " << typeid(*this).name() << " ref: " << typeid(ref).name() << std::endl;
 }
 
 Date::~Date() {

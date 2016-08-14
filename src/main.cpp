@@ -15,6 +15,7 @@
 #include "gregorian.hpp"
 #include "julian.hpp"
 #include "kattistime.h"
+#include "Calendar.h"
 //using namespace std;
 using namespace lab2;
 using namespace std;
@@ -42,28 +43,6 @@ int main() {
 //	Julian j1(2034, 7, 26);
 //	cerr << j1.mod_julian_day() << " j1:" << j1 << endl << endl;
 //
-//	Julian jtoday;
-//	cerr << jtoday.mod_julian_day() << " jtoday:" << jtoday << endl;
-//	Gregorian gtoday;
-//	cerr << gtoday.mod_julian_day() << " gtoday:" << gtoday << endl << endl;
-//
-//	Gregorian g2160(2160, 1, 5);
-//	cerr << g2160.mod_julian_day() << " g2160:" << g2160 << endl << endl;
-//
-//	Gregorian g = Gregorian(2016, 1, 5);
-//	Julian j(g);
-//	cerr << j.mod_julian_day() << " j:" << j << endl;
-//	cerr << g.mod_julian_day() << " g:" << g << endl << endl;
-//
-//	Gregorian g42(2042, 11, 23);
-//	Date& gDF = g42;
-//	Gregorian gF(gDF);
-//	cerr << gDF.mod_julian_day() << " gDF:" << gDF << " typeid:" << typeid(gDF).name() << endl;
-//	cerr << gF.mod_julian_day() << " gF:" << gF << " typeid:" << typeid(gDF).name() << endl << endl;
-
-
-//	Julian jErr(2134, 20, 29);
-//	cerr << jErr.mod_julian_day() << " jErr:" << jErr << endl;
 
 	//TESTFILE
 
@@ -189,110 +168,9 @@ int main() {
 	#endif
 
 	//TESTFILE
+	    cerr << endl << "===========================" << endl << endl;
 
-
-
-//	//set current time before testing
-//	time_t tp;
-//	time(&tp);
-//	std::cerr << "time is " << tp << std::endl;
-//	set_k_time(tp);
-//
-//
-//	std::cerr << std::endl << "lets build gregorian!" << std::endl;
-//	Date * g = new Gregorian();
-//	std::cerr << *g << std::endl;
-//	Gregorian g2;
-//	std::cerr << std::endl << "lets copy construct gregorian!" << std::endl;
-//	Gregorian g3(g2);
-//	std::cerr << std::endl << "lets decrement gregorian!" << std::endl;
-//	std::cerr << "g2 offset: " << g2.getOffset() << std::endl;
-//	--g2; //pre-decrement
-//	std::cerr << "g2 offset: " << g2.getOffset() << std::endl;
-//	g2--;
-//	std::cerr << "g2 offset: " << g2.getOffset() << std::endl;
-//	g2-=10;
-//	std::cerr << "g2 offset: " << g2.getOffset() << std::endl;
-//	std::cerr << "diff g2-g3: " << g2-g3 << std::endl << std::endl;
-//
-//	int year = g -> year();
-//	std::cerr << year << g->month() << "day" << g->day() << std::endl;
-//
-//	std::cerr << std::endl << "lets build julian!" << std::endl;
-//	Date * j = new Julian();
-//	std::cerr << *j << std::endl;
-//	Julian j2;
-//	std::cerr << std::endl << "lets copy construct Julian!" << std::endl;
-//	Julian j3(j2);
-//	std::cerr << std::endl << "lets decrement Julian!" << std::endl;
-//	std::cerr << "j2 offset: " << j2.getOffset() << std::endl;
-//	--j2; //pre-decrement
-//	std::cerr << "j2 offset: " << j2.getOffset() << std::endl;
-//	j2--;
-//	std::cerr << "j2 offset: " << j2.getOffset() << std::endl;
-//	j2 += 10;
-//	std::cerr << "j2 offset: " << j2.getOffset() << std::endl;
-//	std::cerr << "j2<=*j: " << (j2<=*j) << "  j2>=*j: " << (j2>=*j) << std::endl;
-//	std::cerr << "*j: " << *j << ". j2: " << j2 << "." << std::endl << "*j = j2" << std::endl;
-//	std::cerr << "offset *j=" << (*j).getOffset() << std::endl;
-//	std::cerr << "offset j2=" << (j2).getOffset() << std::endl;
-//	*j=j2;
-//	std::cerr << "AFTER: offset *j=" << (*j).getOffset() << std::endl;
-//	std::cerr << "offset *g=" << (*g).getOffset() << std::endl;
-//	*g=j2;
-//	std::cerr << "AFTER: offset j2=" << (j2).getOffset() << std::endl;
-//	std::cerr << "offset *g=" << (*g).getOffset() << std::endl;
-//	std::cerr << "j2 " << j2 << "  *g " << *g << std::endl;
-//	std::cerr << std::endl << "lets build Julian again!" << std::endl;
-//	Julian gToday;
-//	std::cerr << "MJD today:" << gToday.getJulian() << " offset:" << gToday.getOffset() << " date:" << gToday << std::endl << std::endl;
-//	Julian gToday2(2016, 8, 11);
-//	std::cerr << "MJD today2:" << gToday2.getJulian() << " offset today2:" << gToday2.getOffset() << " date:" << gToday2 << std::endl << std::endl;
-//	Julian g1858(1858, 1, 1);
-//	std::cerr << "MJD 1858:" << g1858.getJulian() << " offset:" << g1858.getOffset() << " date:" << g1858 <<std::endl << std::endl;
-//	Julian g1857(1857, 12, 31);
-//	std::cerr << "MJD 1857:" << g1857.getJulian() << " offset:" << g1857.getOffset() << " date:" << g1857 << std::endl << std::endl;
-//
-//	std::cerr << "week_day_name:" << gToday.week_day_name() << " week_day:" << gToday.week_day() << " month_name:" << gToday.month_name() << std::endl;
-//	gToday -= 3;
-//	std::cerr << "week_day_name:" << gToday.week_day_name() << " week_day:" << gToday.week_day() << " month_name:" << gToday.month_name() << std::endl;
-//	gToday--;
-//	std::cerr << "week_day_name:" << gToday.week_day_name() << " week_day:" << gToday.week_day() << " month_name:" << gToday.month_name() << std::endl;
-//	gToday -= 20;
-//	std::cerr << gToday << " week_day_name:" << gToday.week_day_name() << " week_day:" << gToday.week_day() << " month_name:" << gToday.month_name() << std::endl << std::endl;
-//
-//	//	//hitta när offset = 0 för julian:
-//	//	int off = gToday.getOffset();
-//	//	while(off > 0) {
-//	//		--gToday;
-//	//		--off;
-//	//		if(gToday.getOffset() == 0) {
-//	//			std::cerr << "offset is 0 on: " << gToday << "| julian_day_number:" << gToday.getJulian() << std::endl;
-//	//		}
-//	//	}
-//
-//
-//	//	std::cerr << j -> year() << j->month() << "day" << j->day() << std::endl;
-//	//	std::cerr << "days in month g: " << g-> days_this_month()  << "jul: " << j->days_this_month() << std::endl;
-//	//	std::cerr << "monthname g: " << g-> month_name()  << "jul: " << j->month_name() << std::endl;
-//	//	g->add_year(200);
-//	//	std::cerr << "addYear"  << "new year" << g->year() << std::endl;
-//
-//	Date * gr2 = new Gregorian();
-//	cout << *gr2 << endl;
-//	Gregorian gr;
-//	Gregorian gr3(gr);
-//	gr.add_year(2);
-//	gr.add_month(7);
-//	gr.add_day(20);
-//	/////////////////
-//	cout << "5y " << gr << endl;
-//	for(int i = 0; i < 100; i++) {
-//		gr.add_month(15);
-//		cout << gr << endl;
-//	}
-
-
+	    Calendar<Gregorian> cal;
 
 	return 0;
 }
