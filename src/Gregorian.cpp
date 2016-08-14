@@ -17,18 +17,11 @@
 namespace lab2 {
 
 Gregorian::Gregorian() {
-//	time_t mytime;
-//	k_time(&mytime);
 	time_t mytime = k_time(NULL);
 	std::cerr << "gregorian mytime is " << mytime << std::endl;
 	this->julian_day_number = get_julian_number_from_time(mytime);
 }
 
-//Gregorian::Gregorian(Gregorian const& ref) {
-//	std::cerr << "copy" << std::endl;
-//	(*this).offset = ref.offset;
-//	(*this).julian_day_number = ref.julian_day_number;
-//}
 Gregorian::Gregorian(const Date & ref) : Date(ref) {}
 
 Gregorian::Gregorian(const Date * ptr) : Date(*ptr) {}
@@ -120,16 +113,5 @@ Gregorian& Gregorian::operator-=(const int& n) {
 	(*this).julian_day_number -= n;
     return *this;
 }
-
-//Gregorian& Gregorian::operator=(const Date& ref) {
-//	if(typeid(*this)==typeid(ref)) {
-//		//(*this).offset = ref.offset;
-//	} else {
-//		std::cout << "lala = lalala" << std::endl;
-//	}
-//	return *this;
-//}
-
-//void Gregorian::julian_day_to_gregorian
 
 }

@@ -18,28 +18,14 @@
 namespace lab2 {
 
 Julian::Julian() {
-//	time_t mytime;
-//	k_time(&mytime);
 	time_t mytime = k_time(NULL);
 	std::cerr << "julian mytime is " << mytime << std::endl;
-//	set_offset(mytime);
-//	this->julian_day_number = calc_julian_day_number(this->year(), this->month(), this->day());
-
 	this->julian_day_number = get_julian_number_from_time(mytime);
-	//this->offset = get_offset_from_julian_day((*this).julian_day_number);
 }
-
-//Julian::Julian(Julian const& ref) {
-//	std::cerr << "copy" << std::endl;
-//	(*this).offset = ref.offset;
-//	(*this).julian_day_number = ref.julian_day_number;
-//}
 
 Julian::Julian(const Date & ref) : Date(ref) {}
 
 Julian::Julian(const Date * ptr) : Date(*ptr) {}
-
-
 
 Julian::Julian(int year, int month, int day) {
 	is_valid_date(year, month, day);
@@ -92,7 +78,6 @@ bool Julian::is_leap_year(int year) const {
 	 return (year % 4 == 0);
 }
 
-
 Julian& Julian::operator++() {
 	++(*this).julian_day_number;
 	return *this;
@@ -130,16 +115,5 @@ Julian& Julian::operator-=(const int& n) {
 	(*this).julian_day_number -= n;
     return *this; // return the result by reference
 }
-
-//Julian& Julian::operator=(const Date& ref) {
-//	if(typeid(*this)==typeid(ref)) {
-//		//(*this).offset = ref.offset;
-//	} else {
-//		//TODO implementera konstruktor Julian(year, month, day)
-//		//och returnera den
-//	}
-//	std::cout << "implement operator= plz" << std::endl;
-//	return *this;
-//}
 
 }

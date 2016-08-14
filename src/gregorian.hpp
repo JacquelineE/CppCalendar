@@ -23,11 +23,11 @@ protected:
 	virtual void is_valid_date(int year, int month, int day) const;
 
 public:
-	Gregorian();// = default;
+	Gregorian();
 	Gregorian(const Date & ref);
 	Gregorian(const Date * ptr);
 	Gregorian(int year, int month, int day);
-	~Gregorian();
+	virtual ~Gregorian();
 
 	//we can't instantiate date because of pure virtual methods in Date?
 	//therefore they are implemented in subclasses...
