@@ -170,7 +170,9 @@ int main() {
 	//TESTFILE
 	    cerr << endl << "===========================" << endl << endl;
 
-	    Calendar<Gregorian> cal;
-
+	    Calendar<Gregorian> calG;
+	    Calendar<Julian> calJ(calG);
+	    //cerr << "2011-3-3:" << calG.set_date(2011, 3, 3) << endl;
+	    cerr << "2011-30-30:" << calG.set_date(2011, 30, 30) << endl;
 	return 0;
 }

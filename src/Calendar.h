@@ -10,6 +10,7 @@
 
 #include "date.hpp"
 #include <vector>
+#include <iostream>
 
 namespace lab2 {
 
@@ -17,13 +18,12 @@ template<class DateType> class Calendar {
 	class Event {
 	private:
 		DateType eventDate; //use unique_pointer
-		std::string description;
+		std::string eventDescription;
 	public:
-		Event(std::string desc, Date* dat) {
-			this->description = desc;
-			this->eventDate = dat;
+		Event(std::string description, DateType date) {
+			this->eventDescription = description;
+			this->eventDate = date;
 		}
-
 	};
 private:
 	DateType date;
@@ -31,11 +31,14 @@ private:
 
 public:
 	Calendar();
-	//	Calendar(Calendar& ref);
+	Calendar(Calendar const & ref);
+	template <class DateType2> Calendar(Calendar<DateType2> const & ref) {
+		std::cerr << "copy different calendars "  << date << std::endl; //translates automatically!?
+	}
 	virtual ~Calendar();
 
-	//	bool set_date(int year, int month, int day);
-	//	bool add_event (std::string event_name);
+	bool set_date(int year, int month, int day);
+	bool add_event (std::string description);
 	//	bool add_event (std::string event_name, int day);
 	//	bool add_event (std::string event_name, int day, int month);
 	//	bool add_event (std::string event_name, int day, int month, int year);
