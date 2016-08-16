@@ -169,6 +169,10 @@ int main() {
 	#endif
 
 	//TESTFILE
+	    Gregorian inside(1857, 12, 31);
+	    cerr << endl << "===========================" << endl << endl;
+	    Julian outside = inside;
+	    cerr << outside << " " << outside.mod_julian_day() << endl;
 	    cerr << endl << "===========================" << endl << endl;
 
 	    Calendar<Gregorian> cal;

@@ -19,7 +19,8 @@ namespace lab2 {
 Gregorian::Gregorian() {
 	time_t mytime = k_time(NULL);
 	std::cerr << "gregorian mytime is " << mytime << std::endl;
-	this->julian_day_number = get_julian_number_from_time(mytime);
+	int julian_day = outside_range_error(get_julian_number_from_time(mytime));
+	this->julian_day_number = julian_day;
 }
 
 Gregorian::Gregorian(const Date & ref) : Date(ref) {}
@@ -28,24 +29,34 @@ Gregorian::Gregorian(const Date * ptr) : Date(*ptr) {}
 
 Gregorian::Gregorian(int year, int month, int day) {
 	is_valid_date(year, month, day);
-	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
+	int julian_day = outside_range_error((*this).calc_julian_day_number(year, month, day));
+	(*this).julian_day_number = julian_day;
 	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
 	std::cerr << "JD FROM JDN:" << (*this).julian_day_number << std::endl;
 	std::cerr << "OFFSET FROM JDN:" << (*this).get_offset_from_julian_day(julian_day_number) << std::endl;
 }
 
-void Gregorian::is_valid_date(int year, int month, int day) const {
-	if((month > 12) || (month < 1)) {
-		std::cerr << "ERROR MONTH" << std::endl;
-		throw std::invalid_argument( "month must be between 1-12" );
-		return;
+//returns julian day number or 0&error
+int Gregorian::outside_range_error(int julian_day) const {
+	if (julian_day < 2399679) {
+		throw std::out_of_range( "date must be 1857-12-31 or later." );
+		return 0;
 	}
-	else if(day > correct_day_number(year, month) || day < 1) {
-		std::cerr << "ERROR DAY tru " << correct_day_number(year, month) << std::endl;
-		throw std::invalid_argument( "this month does not have this number of days" );
-	}
-	return;
+	return julian_day;
 }
+
+//void Gregorian::is_valid_date(int year, int month, int day) const {
+//	if((month > 12) || (month < 1)) {
+//		std::cerr << "ERROR MONTH" << std::endl;
+//		throw std::invalid_argument( "month must be between 1-12." );
+//		return;
+//	}
+//	else if(day > correct_day_number(year, month) || day < 1) {
+//		std::cerr << "ERROR DAY tru " << correct_day_number(year, month) << std::endl;
+//		throw std::invalid_argument( "this month does not have this number of days." );
+//	}
+//	return;
+//}
 
 //helper
 int Gregorian::calc_julian_day_number(int year, int month, int day) const {
@@ -85,6 +96,7 @@ Gregorian& Gregorian::operator++() {
 
 Gregorian& Gregorian::operator--() {
 	--(*this).julian_day_number;
+	outside_range_error(julian_day_number);
 	return *this;
 }
 
@@ -99,6 +111,7 @@ Gregorian Gregorian::operator--(int) {
 	//std::cerr << "post-- " << std::endl;
 	Gregorian preValue = *this;
 	--(*this).julian_day_number;
+	outside_range_error(julian_day_number);
 	return preValue;
 }
 
@@ -111,6 +124,7 @@ Gregorian& Gregorian::operator+=(const int& n) {
 Gregorian& Gregorian::operator-=(const int& n) {
 	std::cerr << "-= " << std::endl;
 	(*this).julian_day_number -= n;
+	outside_range_error(julian_day_number);
     return *this;
 }
 

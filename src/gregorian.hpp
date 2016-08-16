@@ -15,12 +15,12 @@ namespace lab2 {
 class Gregorian : public Date {
 
 protected:
-	virtual int leap_years_before(int year) const;
-	virtual bool is_leap_year(int year) const;
-	virtual int calc_julian_day_number(int year, int month, int day) const;
-	virtual int get_offset_from_julian_day(int julian_day) const;
-	virtual int julian_day_on_start_offset() const;
-	virtual void is_valid_date(int year, int month, int day) const;
+	virtual int leap_years_before(int year) const; //p
+	virtual bool is_leap_year(int year) const; //p
+	virtual int calc_julian_day_number(int year, int month, int day) const; //p
+	virtual int get_offset_from_julian_day(int julian_day) const; //p
+	virtual int julian_day_on_start_offset() const; //p
+	virtual int outside_range_error(int julian_day) const;
 
 public:
 	Gregorian();

@@ -28,6 +28,20 @@ Date::~Date() {
 	//	//delete [] monthsLengthNormalYear
 }
 
+void Date::is_valid_date(int year, int month, int day) const {
+	std::cerr << "is_valid_date month : " << month << std::endl;
+	if((month > 12) || (month < 1)) {
+		std::cerr << "ERROR MONTH" << std::endl;
+		throw std::invalid_argument( "month must be between 1-12" );
+		return;
+	}
+	else if(day > correct_day_number(year, month) || day < 1) {
+		std::cerr << "ERROR DAY tru " << correct_day_number(year, month) << std::endl;
+		throw std::invalid_argument( "this month does not have this number of days" );
+		return;
+	}
+}
+
 int Date::get_julian_number_from_time(long int currTime) const {
 	int julianNumberStart = 2440587;
 	int numberOfDays = (floor((double) currTime / (60 * 60 * 24)));
@@ -105,6 +119,8 @@ int Date::operator-(const Date& date) const {
 }
 
 Date& Date::operator=(const Date& ref) {
+	std::cerr << "copy =" << std::endl;
+	outside_range_error(ref.julian_day_number);
 	(*this).julian_day_number = ref.julian_day_number;
 	return *this;
 }
@@ -273,7 +289,7 @@ void Date::decrement_year(int n) {
 			daysToSubtract += (monthsLengthNormalYear[month()-1] - day());
 
 		julian_day_number -= daysToSubtract;
-
+		outside_range_error(julian_day_number);
 }
 
 
@@ -344,6 +360,7 @@ void Date::decrement_month(int n) {
 	}
 	julian_day_number -= currMonthLength - std::min(startDay, currMonthLength);
 	std::cerr << "finish " <<(*this).to_string() << std::endl;
+	outside_range_error(julian_day_number);
 }
 
 void Date::add_month(int n) {

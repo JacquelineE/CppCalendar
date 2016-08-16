@@ -20,7 +20,8 @@ namespace lab2 {
 Julian::Julian() {
 	time_t mytime = k_time(NULL);
 	std::cerr << "julian mytime is " << mytime << std::endl;
-	this->julian_day_number = get_julian_number_from_time(mytime);
+	int julian_day = outside_range_error(get_julian_number_from_time(mytime));
+	this->julian_day_number = julian_day;
 }
 
 Julian::Julian(const Date & ref) : Date(ref) {}
@@ -29,23 +30,18 @@ Julian::Julian(const Date * ptr) : Date(*ptr) {}
 
 Julian::Julian(int year, int month, int day) {
 	is_valid_date(year, month, day);
-	(*this).julian_day_number = (*this).calc_julian_day_number(year, month, day);
+	int julian_day = outside_range_error((*this).calc_julian_day_number(year, month, day));
+	(*this).julian_day_number = julian_day;
 	std::cerr << "julian day number: " << (*this).julian_day_number << std::endl;
 	std::cerr << "FROM JDN:" << get_offset_from_julian_day(julian_day_number) << std::endl;
 }
 
-void Julian::is_valid_date(int year, int month, int day) const {
-	std::cerr << "is_valid_date month : " << month << std::endl;
-	if((month > 12) || (month < 1)) {
-		std::cerr << "ERROR MONTH" << std::endl;
-		throw std::invalid_argument( "month must be between 1-12" );
-		return;
+int Julian::outside_range_error(int julian_day) const {
+	if (julian_day < 2399691) {
+		throw std::out_of_range( "date must be 1857-12-31 or later." );
+		return 0;
 	}
-	else if(day > correct_day_number(year, month) || day < 1) {
-		std::cerr << "ERROR DAY tru " << correct_day_number(year, month) << std::endl;
-		throw std::invalid_argument( "this month does not have this number of days" );
-		return;
-	}
+	return julian_day;
 }
 
 //helper
@@ -85,6 +81,7 @@ Julian& Julian::operator++() {
 
 Julian& Julian::operator--() {
 	--(*this).julian_day_number;
+	outside_range_error(julian_day_number);
 	return *this;
 }
 
@@ -99,6 +96,7 @@ Julian Julian::operator--(int) {
 	//std::cerr << "post-- " << std::endl;
 	Julian preValue = *this;
 	--(*this).julian_day_number;
+	outside_range_error(julian_day_number);
 	return preValue;
 }
 
@@ -113,6 +111,7 @@ Julian& Julian::operator-=(const int& n) {
     /* addition of rhs to *this takes place here */
 	std::cerr << "-= " << std::endl;
 	(*this).julian_day_number -= n;
+	outside_range_error(julian_day_number);
     return *this; // return the result by reference
 }
 
