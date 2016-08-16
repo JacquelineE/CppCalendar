@@ -43,8 +43,8 @@ void Gregorian::is_valid_date(int year, int month, int day) const {
 	else if(day > correct_day_number(year, month) || day < 1) {
 		std::cerr << "ERROR DAY tru " << correct_day_number(year, month) << std::endl;
 		throw std::invalid_argument( "this month does not have this number of days" );
-		return;
 	}
+	return;
 }
 
 //helper

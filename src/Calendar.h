@@ -26,7 +26,7 @@ public:
 			this->eventDate = date;
 		}
 		bool operator==(const Event& ref) const {
-			return (this->eventDate == ref.eventDate) && (this->eventDescription.compare(ref.eventDescription) == 0);
+			return (this->eventDate == ref.eventDate) && ((this->eventDescription).compare(ref.eventDescription) == 0);
 		}
 		DateType const getDate() {
 			return eventDate;

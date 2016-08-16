@@ -6,14 +6,14 @@
  */
 
 #include "date.hpp"
-#include "julian.hpp"
+//#include "julian.hpp"
 #include <iostream>
 #include <time.h>
 #include <math.h>       /* ceil */
 #include <algorithm>    // std::max
 #include <typeinfo> //typeid
 #include <sstream>	//stringstream
-#include "kattistime.h"
+//#include "kattistime.h"
 
 namespace lab2 {
 

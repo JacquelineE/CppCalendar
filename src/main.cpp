@@ -10,12 +10,13 @@
 #include <time.h>
 #include <assert.h>             // assert(b) ger felmeddelande om b falsk
 #include <ctime>
- #include <typeinfo>
-//#include "date.hpp"
+#include <typeinfo>
+#include "date.hpp"
 #include "gregorian.hpp"
 #include "julian.hpp"
 #include "kattistime.h"
 #include "Calendar.h"
+#include "Calendar.cpp"
 //using namespace std;
 using namespace lab2;
 using namespace std;
@@ -170,16 +171,6 @@ int main() {
 	//TESTFILE
 	    cerr << endl << "===========================" << endl << endl;
 
-//	    Calendar<Gregorian> calG;
-//	    Calendar<Julian> calJ(calG);
-//	    //cerr << "2011-3-3:" << calG.set_date(2011, 3, 3) << endl;
-//	    cerr << "2011-30-30:" << calG.set_date(2011, 30, 30) << endl;
-//	    cerr << endl << "add_event:" << endl;
-//	    calJ.add_event("kalas");
-//	    cerr << "försöker adda likadan:" << calJ.add_event("kalas") << endl;
-//	    cerr << "correct:" << calJ.add_event("correct", 17, 7, 2007) << " incorrect:" << calJ.add_event("incorrect", 17, 21, 2007) << endl << endl;
-//	    cerr << "delete kalas:" << calJ.delete_event("kalas") << " delete finns ej:" << calG.delete_event("wtf") << " delete incorrect:" << calJ.delete_event("wtf", 1000)<< endl;;
-
 	    Calendar<Gregorian> cal;
 	    cal.set_date(2000, 12, 2);
 	    cal.add_event("Basketträning", 4, 12, 2000);
@@ -192,6 +183,7 @@ int main() {
 	    cal.add_event("Julafton", 24); // En likadan händelse samma datum ska
 	    // ignoreras och inte sättas in i kalendern
 	    cal.add_event("Min första cykel", 20, 12, 2000);
+
 	    cal.delete_event("Basketträning", 4);
 	    std::cout << cal; // OBS! Vårdagjämning och första advent är
 	    // före nuvarande datum och skrivs inte ut
